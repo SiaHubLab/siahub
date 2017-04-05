@@ -65,7 +65,7 @@ class Hosts extends Command
 
                     $db_host->host = (filter_var($hostname, FILTER_VALIDATE_IP)) ? $hostname:gethostbyname($hostname);
                     if ($last_scan['success']) {
-                        $db_host->last_seen = strtotime(explode('.', $last_scan['timestamp'])[0]."-04:00");
+                        $db_host->last_seen = strtotime(explode('.', $last_scan['timestamp'])[0].env('SIA_TIME_OFFSET'));
                         echo "last seen: ";
                         var_dump($last_scan, explode('.', $last_scan['timestamp'])[0]);
                     }
