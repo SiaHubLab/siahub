@@ -27,6 +27,10 @@ class HostsController extends Controller
             if ($mode == "active") {
                 $hosts = $hosts->where('active', 1);
             }
+
+            if ($mode == "latest") {
+                $hosts = $hosts->orderBy('id', 'desc')->take(10);
+            }
             Cache::put($cache_key, $hosts->get(), 5);
         }
 
@@ -53,7 +57,7 @@ class HostsController extends Controller
             foreach ($hosts->get() as $host) {
                 $info = geoip_record_by_name($host->host);
                 if ($info) {
-                    $points[] = ['lat' => $info['latitude'], 'lng' => $info['longitude']];
+                    $points[] = ['host' => $host, 'lat' => $info['latitude'], 'lng' => $info['longitude']];
                 }
             }
             Cache::put($cache_key, $points, 5);

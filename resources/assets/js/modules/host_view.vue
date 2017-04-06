@@ -1,39 +1,36 @@
 <template>
 <div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            {{hostData.key}}
-            <span class="pull-right label label-info" style="font-size: 100%;">Last seen: {{moment.utc(hostData.last_seen*1000).format('dddd, MMMM Do YYYY, HH:mm:ss z')}}</span>
-        </div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-md-3">
-                    Storage: {{totalstorage()}}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    {{hostData.key}}
                 </div>
-                <div class="col-md-3">
-                    Used: {{used()}}
-                </div>
-                <div class="col-md-3" v-html="used_percent()">
-                </div>
-                <div class="col-md-3">
-                    Price: {{price()}}
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>Storage: {{totalstorage()}}</p>
+                            <p>Used: {{used()}}</p>
+                            <p v-html="used_percent()"></p>
+                            <p>Price: {{price()}}</p>
+                            <p><span class="label label-info" style="font-size: 100%;">Last success check: {{moment.utc(hostData.last_seen*1000).format('dddd, MMMM Do YYYY, HH:mm:ss z')}}</span></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <viewer :fields="fields" :data="hostData"></viewer>
+            <p class="alert alert-info">Uptime/downtime data collected locally by SiaHub wallet and may not provide exact information.</p>
+        </div>
     </div>
+
     <div v-if="chartData" class="row">
         <div class="col-md-12">
               <highstock :options="chartData" ref="highcharts"></highstock>
         </div>
     </div>
     <br />
-    <!-- <br /> -->
-    <div class="row">
-        <div class="col-md-12">
-            <viewer :fields="fields" :data="hostData"></viewer>
-        </div>
-    </div>
-
     <div v-show="error" class="alert alert-danger">
         <p><strong>Oops!</strong> Error, {{error}}</p>
         <p><button class="btn btn-primary" @click.prevent="refresh()">Try again</button></p>
@@ -240,6 +237,38 @@ export default {
                     type: 'text',
                     name: 'Host',
                     key: 'host'
+                },
+                historicuptime: {
+                    type: 'text',
+                    name: 'Uptime',
+                    key: 'historicuptime',
+                    formatter: function(str, entry){
+                        if(parseInt(entry.historicuptime) > 0) {
+                            var uptime = entry.historicuptime/1000000;
+                            var rate = 100;
+                            if(parseInt(entry.historicdowntime) > 0) {
+                                rate = (entry.historicuptime/entry.historicdowntime*100).toFixed(2);
+                            }
+                            var time = (+new Date())-uptime;
+                            return window.moment(time).toNow(true)+' - '+rate+'%';
+                        } else {
+                            return 'not enough data collected';
+                        }
+                    }
+                },
+                historicdowntime: {
+                    type: 'text',
+                    name: 'Downtime',
+                    key: 'historicdowntime',
+                    formatter: function(str, entry){
+                        if(parseInt(entry.historicdowntime) > 0) {
+                            var uptime = entry.historicdowntime/1000000;
+                            var time = (+new Date())-uptime;
+                            return window.moment(time).toNow(true);
+                        } else {
+                            return "-";
+                        }
+                    }
                 },
             }
         };

@@ -48,15 +48,46 @@ export default {
 
             this.markers = [];
             _.each(points, (point) => {
-                this.markers.push(new google.maps.Marker({
-                    position: point,
+
+                var marker = new google.maps.Marker({
+                    position: point.latlng,
                     map: this.map,
                     icon: image,
-                    title: 'Hello World!'
-                }));
+                    title: point.host.host
+                });
+
+                this.markers.push(marker);
+
+                var contentString = '<h4>'+point.host.host+'</h4>\
+                <p>Price: '+Math.round(point.host.storageprice/1e12*4320)+' SC </p>\
+                <p>Storage: '+humanFileSize(point.host.totalstorage, true)+'</p>\
+                <p>Used: '+humanFileSize(point.host.totalstorage-point.host.remainingstorage, true)+'</p>\
+                <p>Announced addr: '+point.host.netaddress+'</p>\
+                ';
+
+                var percent = Math.round((point.host.totalstorage-point.host.remainingstorage)/point.host.totalstorage*100);
+                if(!isNaN(percent)) {
+                    var color_num = Math.round(percent/100*255);
+                    var color = "rgba("+color_num+", "+ Math.max(0, 150 - color_num) +", 0, 0.7)"
+                    contentString = contentString+'<div class="progress" style="width: 200px;">\
+                    <div class="progress-bar" style="background-color: '+color+';width:'+(percent-15)+'%;"></div>\
+                    <div class="progress-bar" style="background-color: '+color+';width:15%;">'+percent+'%</div>\
+                    </div><br />';
+                }
+
+                contentString = contentString+'<p><a href="/#/host/'+point.host.id+'" class="btn btn-info btn=sm">View Host</a></p>';
+
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString
+                });
+
+                marker.addListener('click', function() {
+                    infowindow.open(this.map, marker);
+                });
             });
 
             this.markerCluster = new MarkerClusterer(this.map, this.markers, {
+                maxZoom: 8,
                 imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
             });
 
@@ -75,14 +106,17 @@ export default {
             this.addMarkers();
 
             this.heatmap = new google.maps.visualization.HeatmapLayer({
-                data: this.getPoints(),
+                data: this.getPoints().map(function(host){ return host.latlng; }),
                 map: this.map
             });
             this.heatmap.set('radius', this.heatmap.get('radius') ? null : 20);
         },
         getPoints(){
             return this.hosts.map(function(host) {
-                return new google.maps.LatLng(host.lat, host.lng)
+                return {
+                    latlng: new google.maps.LatLng(host.lat, host.lng),
+                    host: host.host
+                }
             })
         },
         refresh(){

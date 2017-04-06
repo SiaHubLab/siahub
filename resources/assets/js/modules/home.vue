@@ -3,33 +3,18 @@
     <div class="row">
         <div class="col-md-4">
             <p><input class="form-control" v-model="searchQuery" placeholder="Search"></p>
+
+            <button type="button" class="btn btn-info" @click.pevent="refresh()">Update list</button>
+
             <div class="btn-group" role="group">
               <button type="button" :class="'btn '+((mode == 'active')?'btn-success active':'btn-default')" @click.pevent="mode='active'">Active hosts</button>
               <button type="button" :class="'btn '+((mode == 'all')?'btn-primary active':'btn-default')" @click.pevent="mode='all'">All hosts</button>
+              <button type="button" :class="'btn '+((mode == 'latest')?'btn-warning active':'btn-default')" @click.pevent="mode='latest'">Latest 10 hosts</button>
             </div>
         </div>
-        <!-- <div class="col-md-4 col-md-offset-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">Stats</div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p>Total Storage:</p>
-                            <p>Utilization:</p>
-                            <p>Price Avg - Min - Max:</p>
-                        </div>
-                        <div class="col-md-6">
-                            <p>{{totalStorage()}}</p>
-                            <p><span v-html="utilization()"></span></p>
-                            <p>{{averagePrice()}} - {{minPrice()}} - {{maxPrice()}} SC</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
     </div>
     <br />
-    <grid v-show="!loading && !error" defaultSort="used" defaultSortOrder="-1" :data="hosts" :columns="gridColumns" :formatters="formatters" :filter-key="searchQuery">
+    <grid v-show="!loading && !error" :defaultSort="sortKey" defaultSortOrder="-1" :data="hosts" :columns="gridColumns" :formatters="formatters" :filter-key="searchQuery">1
     </grid>
 
     <div v-show="error" class="alert alert-danger">
@@ -62,7 +47,7 @@ export default {
 
             this.error = false;
             this.loading = true;
-            axios.get((this.mode=='active')?'/api/hosts/active':'/api/hosts/all')
+            axios.get('/api/hosts/'+this.mode)
                 .then((response) => {
                     //this.gridData = response.data;
                     this.updateHosts(response.data);
@@ -135,7 +120,8 @@ export default {
             error: false,
             searchQuery: '',
             mode: 'active',
-            gridColumns: ['host', 'totalstorage', 'used', 'used_percent', 'price', 'actions'],
+            sortKey: 'used',
+            gridColumns: ['id', 'host', 'totalstorage', 'used', 'used_percent', 'price', 'actions'],
             formatters: {
                 actions: function(str, entry){
                     return {

@@ -11,7 +11,12 @@
                 </td>
                 <td>
                     <span v-if="field.type == 'text'">
-                          {{data[field.key]}}
+                          <span v-if="typeof field.formatter === 'function'">
+                              {{field.formatter(data[field.key], data)}}
+                          </span>
+                          <span v-else>
+                              {{data[field.key]}}
+                          </span>
                     </span>
 
                     <span v-if="field.type == 'date'">
