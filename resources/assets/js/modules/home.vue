@@ -128,6 +128,9 @@ export default {
                         view: '/host/'+entry.id
                     }
                 },
+                host: function(str, entry, raw){
+                    return str+"<sup>"+entry.netaddress+"<sup>";
+                },
                 price: function(str, entry, raw){
                     if(raw) return Math.round(entry.storageprice/1e12*4320);
 
