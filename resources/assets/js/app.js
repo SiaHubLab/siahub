@@ -21,6 +21,7 @@ Vue.directive('tooltip', function(el, binding) {
 Vue.component('grid', require('./components/grid.vue'));
 Vue.component('viewer', require('./components/viewer.vue'));
 Vue.component('stats', require('./modules/stats.vue'));
+Vue.component('wallet', require('./components/wallet.vue'));
 
 Vue.use(Toasted, {
     theme: "primary",

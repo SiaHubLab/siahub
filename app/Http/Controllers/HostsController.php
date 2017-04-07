@@ -18,6 +18,11 @@ class HostsController extends Controller
         // $this->middleware('auth');
     }
 
+    public function wallet_status()
+    {
+        return response()->json(Cache::get('wallet_online'));
+    }
+
     public function index($mode)
     {
         $cache_key = "hosts_".$mode;

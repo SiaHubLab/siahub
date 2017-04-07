@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Host;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
 
 class Hosts extends Command
 {
@@ -82,8 +83,11 @@ class Hosts extends Command
                 } catch (Exception $e) {
                     echo "err host". $e->getMessage();
                 }
+
+                Cache::put('wallet_online', true, 10);
             }
-        } catch (Exception $e) {
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            Cache::put('wallet_online', false, 10);
             echo $e->getMessage();
         }
     }
