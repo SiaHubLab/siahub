@@ -22,10 +22,8 @@
     "highcharts": "^5.0.10",
     "moment": "^2.18.1",
     "vue-highcharts": "0.0.9",
-    "vue-morris": "0.0.6",
     "vue-quill-editor": "^2.0.0",
     "vue-toasted": "^1.0.26",
-    "vue2-timepicker": "^0.1.4",
     "vuejs-datepicker": "^0.6.5",
     "vuex": "^2.2.1"
   }

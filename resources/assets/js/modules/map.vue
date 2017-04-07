@@ -90,7 +90,6 @@ export default {
                 maxZoom: 8,
                 imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
             });
-
         },
         mapInit(){
             var that = this;
