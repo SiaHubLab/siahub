@@ -95,7 +95,6 @@ export default {
             var that = this;
 
             var myLatlng = new google.maps.LatLng(35.8752506, -8.4676082);
-            // map options,
             var myOptions = {
               zoom: 3,
               center: myLatlng
@@ -119,12 +118,6 @@ export default {
             })
         },
         refresh(){
-
-            // if(this.getHostById(this.$route.params.id)){
-            //     this.hostData = this.getHostById(this.$route.params.id);
-            //     return true;
-            // }
-
             if(this.loading) return false;
 
             this.error = false;

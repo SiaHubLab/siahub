@@ -44,7 +44,6 @@ export default {
             this.loading = true;
             axios.get('/api/hosts/active')
                 .then((response) => {
-                    //this.gridData = response.data;
                     this.updateHosts(response.data);
                     this.loading = false;
                 })

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -35,7 +35,9 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <router-link class="navbar-brand" to="/">{{ config('app.name', 'Laravel') }}</router-link>
+                    <router-link class="navbar-brand" to="/">
+                        <img src="/img/logo.png" alt="{{ config('app.name', 'Laravel') }}">
+                    </router-link>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">

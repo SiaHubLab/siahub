@@ -18,12 +18,6 @@ export default {
     },
     methods: {
         refresh(){
-
-            // if(this.getHostById(this.$route.params.id)){
-            //     this.hostData = this.getHostById(this.$route.params.id);
-            //     return true;
-            // }
-
             if(this.loading) return false;
 
             this.error = false;

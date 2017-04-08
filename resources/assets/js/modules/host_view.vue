@@ -60,16 +60,6 @@ export default {
         chartData(){
             if(typeof this.hostData.history !== "object") return false;
 
-            // var data = [];
-            // data = this.hostData.history.map((entry) => {
-            //     return {
-            //         date: entry.created_at,
-            //         e: (((entry.storageprice/1e12*4320)*((entry.totalstorage-entry.remainingstorage)/1000/1000/1000/1000))/30).toFixed(2),
-            //         s: (entry.totalstorage/1000/1000/1000).toFixed(2),
-            //         u: ((entry.totalstorage-entry.remainingstorage)/1000/1000/1000).toFixed(2)
-            //     };
-            // });
-            //return data;
             var options = {
                 chart: { type: "area" },
                 rangeSelector: {
@@ -164,12 +154,6 @@ export default {
     },
     methods: {
         refresh(){
-
-            // if(this.getHostById(this.$route.params.id)){
-            //     this.hostData = this.getHostById(this.$route.params.id);
-            //     return true;
-            // }
-
             if(this.loading) return false;
 
             this.error = false;

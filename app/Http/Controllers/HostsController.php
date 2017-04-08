@@ -3,21 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Host;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class HostsController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        // $this->middleware('auth');
-    }
-
     public function wallet_status()
     {
         return response()->json(Cache::get('wallet_online'));

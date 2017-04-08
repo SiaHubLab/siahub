@@ -10,21 +10,23 @@ $panel-default-border: $laravel-border-color;
 $panel-inner-border: $laravel-border-color;
 
 // Brands
-$brand-primary: #3097D1;
-$brand-info: #8eb4cb;
-$brand-success: #2ab27b;
-$brand-warning: #cbb956;
-$brand-danger: #bf5329;
+$brand-primary: #00cba0;
+$brand-info: #0b96eb;
+$brand-success: #00b36a;
+$brand-warning: #f0d231;
+$brand-danger: #ff4700;
 
 // Typography
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 $font-family-sans-serif: "Open Sans", sans-serif;
 $font-size-base: 14px;
 $line-height-base: 1.6;
-$text-color: #636b6f;
+$text-color: #373c3e;
 
 // Navbar
 $navbar-default-bg: #fff;
+$navbar-inverse-link-color: #fff;
+$navbar-inverse-link-hover-color: #00cba0;
 
 // Buttons
 $btn-default-color: $text-color;
