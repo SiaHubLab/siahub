@@ -59,10 +59,12 @@ const BaseVue = Vue.extend({
     router
 });
 
+var divs = document.querySelectorAll('.app');
 
-document.querySelectorAll('.app').forEach((node) => {
+[].forEach.call(divs, function(div) {
+    // do whatever
     new BaseVue({
-        el: node,
+        el: div,
         store
     });
 });
