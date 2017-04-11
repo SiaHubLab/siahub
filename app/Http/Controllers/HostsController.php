@@ -52,9 +52,65 @@ class HostsController extends Controller
                 $info = geoip_record_by_name($host->host);
                 if ($info) {
                     $points[] = ['host' => $host, 'lat' => $info['latitude'], 'lng' => $info['longitude']];
+                    if (empty($host->continent) || $host->country) {
+                        $host->continent = $info['continent_code'];
+                        $host->country = $info['country_name'];
+                        $host->save();
+                    }
                 }
             }
             Cache::put($cache_key, $points, 5);
+        }
+
+        return Cache::get($cache_key);
+    }
+
+    public function versions()
+    {
+        $cache_key = "versions_active";
+
+        if (!Cache::has($cache_key)) {
+            $points = [];
+            $hosts = Host::selectRaw('count(*) as hosts, version')
+                          ->where('active', 1)
+                          ->groupBy('version')
+                          ->orderBy('version', 'desc')
+                          ->get();
+            Cache::put($cache_key, $hosts, 5);
+        }
+
+        return Cache::get($cache_key);
+    }
+
+    public function countries()
+    {
+        $cache_key = "countries_active";
+
+        if (!Cache::has($cache_key)) {
+            $points = [];
+            $hosts = Host::selectRaw('count(*) as hosts, country')
+                          ->where('active', 1)
+                          ->groupBy('country')
+                          ->orderBy('hosts', 'desc')
+                          ->get();
+            Cache::put($cache_key, $hosts, 5);
+        }
+
+        return Cache::get($cache_key);
+    }
+
+    public function continents()
+    {
+        $cache_key = "continents_active";
+
+        if (!Cache::has($cache_key)) {
+            $points = [];
+            $hosts = Host::selectRaw('count(*) as hosts, continent')
+                          ->where('active', 1)
+                          ->groupBy('continent')
+                          ->orderBy('hosts', 'desc')
+                          ->get();
+            Cache::put($cache_key, $hosts, 5);
         }
 
         return Cache::get($cache_key);

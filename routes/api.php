@@ -21,6 +21,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/wallet_status', "HostsController@wallet_status");
 Route::get('/hosts/{mode}', "HostsController@index");
 Route::get('/map', "HostsController@map");
+Route::get('/versions', "HostsController@versions");
+Route::get('/countries', "HostsController@countries");
+Route::get('/continents', "HostsController@continents");
 Route::get('/host/{id}', "HostsController@host");
 Route::get('/sia_ticker', function () {
     if (Cache::has('cmcticker')) {

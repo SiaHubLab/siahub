@@ -1,9 +1,9 @@
 <template>
 <ul class="nav navbar-nav navbar-right">
-    <li><a href="#" v-tooltip:bottom="'Total Sia network storage'">Storage: {{totalStorage()}}</a></li>
-    <li><a href="#" v-tooltip:bottom="'Storage Utilization'"><span v-html="utilization()"></span></a></li>
-    <li><a href="#" v-tooltip:bottom="'$/TB/month Avg/Min/Max'">Price: {{averagePrice()}}/{{minPrice()}}/{{maxPrice()}} $</a></li>
-    <li><a href="#" v-tooltip:bottom="'CoinMarketCap Price'">{{ticker.price_btc}} BTC / {{ticker.price_usd}}$</a></li>
+    <li><router-link to="/network" v-tooltip:bottom="'Total Sia network storage'">Storage: {{totalStorage()}}</router-link></li>
+    <li><router-link to="/network" v-tooltip:bottom="'Storage Utilization'"><span v-html="utilization()"></span></router-link></li>
+    <li><router-link to="/network" v-tooltip:bottom="'$/TB/month Avg/Min/Max'">Price: {{averagePrice()}}/{{minPrice()}}/{{maxPrice()}} $</router-link></li>
+    <li><router-link to="/network" v-tooltip:bottom="'CoinMarketCap Price'">{{ticker.price_btc}} BTC / {{ticker.price_usd}}$</router-link></li>
 </ul>
 </template>
 

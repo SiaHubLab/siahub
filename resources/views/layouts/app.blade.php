@@ -45,6 +45,7 @@
                     <ul class="nav navbar-nav">
                         <li><router-link to="/">Home</router-link></li>
                         <li><router-link to="/map">Map</router-link></li>
+                        <li><router-link to="/network">Network</router-link></li>
                     </ul>
                     <stats></stats>
                 </div>

@@ -36,6 +36,7 @@ Vue.use(VueHighcharts, {
 const home = require('./modules/home.vue');
 const host_view = require('./modules/host_view.vue');
 const map = require('./modules/map.vue');
+const network = require('./modules/network.vue');
 
 const router = new VueRouter({
     mode: 'hash',
@@ -51,6 +52,10 @@ const router = new VueRouter({
         {
             path: '/map',
             component: map
+        },
+        {
+            path: '/network',
+            component: network
         }
     ]
 })

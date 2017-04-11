@@ -74,7 +74,7 @@ class Hosts extends Command
 
                     $db_host->save();
 
-                    if (!$collect_hosts || $new) {
+                    if ((!$collect_hosts && $db_host->active) || $new) { // collect only active hosts OR add init history for new host
                         $db_host->history()->create($host);
                         echo "History added".PHP_EOL;
                     }
