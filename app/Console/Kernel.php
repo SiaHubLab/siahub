@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\Hosts::class
+        Commands\Hosts::class,
+        Commands\Network::class
     ];
 
     /**
@@ -26,6 +27,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('hosts:fetch 0')->everyTenMinutes()->withoutOverlapping();
         $schedule->command('hosts:fetch 1')->everyMinute()->withoutOverlapping();
+        $schedule->command('network')->everyTenMinutes()->withoutOverlapping();
     }
 
     /**

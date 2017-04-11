@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Host;
+use App\Models\NetworkHistory;
 use Illuminate\Support\Facades\Cache;
 
 class HostsController extends Controller
@@ -110,6 +111,19 @@ class HostsController extends Controller
                           ->groupBy('continent')
                           ->orderBy('hosts', 'desc')
                           ->get();
+            Cache::put($cache_key, $hosts, 5);
+        }
+
+        return Cache::get($cache_key);
+    }
+
+    public function network()
+    {
+        $cache_key = "network_active";
+
+        if (!Cache::has($cache_key)) {
+            $points = [];
+            $hosts = NetworkHistory::orderBy('created_at', 'asc')->get();
             Cache::put($cache_key, $hosts, 5);
         }
 

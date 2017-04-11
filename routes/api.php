@@ -24,6 +24,7 @@ Route::get('/map', "HostsController@map");
 Route::get('/versions', "HostsController@versions");
 Route::get('/countries', "HostsController@countries");
 Route::get('/continents', "HostsController@continents");
+Route::get('/network', "HostsController@network");
 Route::get('/host/{id}', "HostsController@host");
 Route::get('/sia_ticker', function () {
     if (Cache::has('cmcticker')) {
