@@ -1,46 +1,48 @@
 <template>
-  <table class="table table-bordered table-white">
-    <thead>
-      <tr>
-        <th v-for="key in columns"
-          @click="sortBy(key)"
-          :class="{ active: sortKey == key }">
-          {{ key | capitalize }}
-          <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
-          </span>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="entry in filteredData">
-        <td v-for="key in columns">
-          <span v-if="key != 'actions'" v-html="getFormatter(key)(entry[key], entry)"></span>
-          <span v-else>
-              <router-link v-if="getFormatter(key)(entry[key], entry).view" class="btn btn-success btn-sm" :to="getFormatter(key)(entry[key], entry).view">View</router-link>
-              <router-link v-if="getFormatter(key)(entry[key], entry).edit" class="btn btn-info btn-sm" :to="getFormatter(key)(entry[key], entry).edit">Edit</router-link>
-              <router-link v-if="getFormatter(key)(entry[key], entry).delete" class="btn btn-danger btn-sm" :to="getFormatter(key)(entry[key], entry).delete">Delete</router-link>
-          </span>
-        </td>
-      </tr>
-    </tbody>
-    <tfoot>
-        <tr>
-          <td :colspan="columns.length">
-              <nav>
-                <ul class="pager">
-                  <li :class="(this.page <= 1) ? 'disabled':''"><a @click.prevent="prevPage" href="#">To the left</a></li>
-                  <li :class="(this.page >= this.pages) ? 'disabled':''"><a @click.prevent="nextPage" href="#">To the right</a></li>
-                </ul>
-              </nav>
-          </td>
-        </tr>
-        <tr class="text-center">
-          <td :colspan="columns.length">
-                Rows: {{this.filteredDataLength}} / Page: {{this.page}} of {{this.pages}}
-          </td>
-        </tr>
-    </tfoot>
-  </table>
+    <div class="table-responsive">
+      <table class="table table-bordered table-white">
+        <thead>
+          <tr>
+            <th v-for="key in columns"
+              @click="sortBy(key)"
+              :class="{ active: sortKey == key }">
+              {{ key | capitalize }}
+              <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="entry in filteredData">
+            <td v-for="key in columns">
+              <span v-if="key != 'actions'" v-html="getFormatter(key)(entry[key], entry)"></span>
+              <span v-else>
+                  <router-link v-if="getFormatter(key)(entry[key], entry).view" class="btn btn-success btn-sm" :to="getFormatter(key)(entry[key], entry).view">View</router-link>
+                  <router-link v-if="getFormatter(key)(entry[key], entry).edit" class="btn btn-info btn-sm" :to="getFormatter(key)(entry[key], entry).edit">Edit</router-link>
+                  <router-link v-if="getFormatter(key)(entry[key], entry).delete" class="btn btn-danger btn-sm" :to="getFormatter(key)(entry[key], entry).delete">Delete</router-link>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+              <td :colspan="columns.length">
+                  <nav>
+                    <ul class="pager">
+                      <li :class="(this.page <= 1) ? 'disabled':''"><a @click.prevent="prevPage" href="#">To the left</a></li>
+                      <li :class="(this.page >= this.pages) ? 'disabled':''"><a @click.prevent="nextPage" href="#">To the right</a></li>
+                    </ul>
+                  </nav>
+              </td>
+            </tr>
+            <tr class="text-center">
+              <td :colspan="columns.length">
+                    Rows: {{this.filteredDataLength}} / Page: {{this.page}} of {{this.pages}}
+              </td>
+            </tr>
+        </tfoot>
+      </table>
+  </div>
 </template>
 
 <script>

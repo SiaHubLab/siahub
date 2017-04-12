@@ -1,6 +1,5 @@
 <template>
 <ul class="nav navbar-nav navbar-right">
-    <li><router-link to="/network" v-tooltip:bottom="'Total Sia network storage'">Storage: {{totalStorage()}}</router-link></li>
     <li><router-link to="/network" v-tooltip:bottom="'Storage Utilization'"><span v-html="utilization()"></span></router-link></li>
     <li><router-link to="/network" v-tooltip:bottom="'$/TB/month Avg/Min/Max'">Price: {{averagePrice()}}/{{minPrice()}}/{{maxPrice()}} $</router-link></li>
     <li><router-link to="/network" v-tooltip:bottom="'CoinMarketCap Price'">{{ticker.price_btc}} BTC / {{ticker.price_usd}}$</router-link></li>
@@ -107,7 +106,7 @@ export default {
             return '<div class="progress" style="width:150px;">\
             <div class="progress-bar" style="background-color: '+color+';width:'+(percent-15)+'%;"></div>\
             <div class="progress-bar" style="background-color: '+color+';width:15%;">'+percent+'%</div>\
-            <div class="progress-bar" style="color: #000;background-color: transparent;width:'+(100-15-percent)+'%">'+humanFileSize(utilization, true)+'</div>\
+            <div class="progress-bar" style="color: #000;background-color: transparent;width:'+(100-15-percent)+'%">'+humanFileSize(utilization, true)+' / '+this.totalStorage()+'</div>\
             </div>';
         }
     },

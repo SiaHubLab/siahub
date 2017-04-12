@@ -3,48 +3,50 @@
     <div v-if="error" class="alert alert-danger">
         <p v-for="err in error"><strong>Oops!</strong> Error, {{err}}</p>
     </div>
-    <table class="table table-bordered table-white">
-        <tbody>
-            <tr v-for="field in fields" v-if="data[field.key]">
-                <td>
-                    {{field.name}}
-                </td>
-                <td>
-                    <span v-if="field.type == 'text'">
-                          <span v-if="typeof field.formatter === 'function'">
-                              <span v-html="field.formatter(data[field.key], data)"></span>
-                          </span>
-                          <span v-else>
+    <div class="table-responsive">
+        <table class="table table-bordered table-white">
+            <tbody>
+                <tr v-for="field in fields" v-if="data[field.key]">
+                    <td>
+                        {{field.name}}
+                    </td>
+                    <td>
+                        <span v-if="field.type == 'text'">
+                              <span v-if="typeof field.formatter === 'function'">
+                                  <span v-html="field.formatter(data[field.key], data)"></span>
+                              </span>
+                              <span v-else>
+                                  <span v-html="data[field.key]"></span>
+                              </span>
+                        </span>
+
+                        <span v-if="field.type == 'date'">
+                                {{data[field.key]}}
+                        </span>
+
+                        <span v-if="field.type == 'file'">
+                              <p v-if="images[field.key]">
+                                  <img style="width: 50%;" :src="images[field.key]" />
+                              </p>
+                              <p v-if="data[field.key]" ><a class="btn btn-success" :href="data[field.key]" target="_blank">Скачать</a></p>
+                        </span>
+
+                        <span v-if="field.type == 'number'">
+                              {{data[field.key]}}
+                        </span>
+
+                        <span v-if="field.type == 'editor'">
                               <span v-html="data[field.key]"></span>
-                          </span>
-                    </span>
+                        </span>
 
-                    <span v-if="field.type == 'date'">
-                            {{data[field.key]}}
-                    </span>
-
-                    <span v-if="field.type == 'file'">
-                          <p v-if="images[field.key]">
-                              <img style="width: 50%;" :src="images[field.key]" />
-                          </p>
-                          <p v-if="data[field.key]" ><a class="btn btn-success" :href="data[field.key]" target="_blank">Скачать</a></p>
-                    </span>
-
-                    <span v-if="field.type == 'number'">
-                          {{data[field.key]}}
-                    </span>
-
-                    <span v-if="field.type == 'editor'">
-                          <span v-html="data[field.key]"></span>
-                    </span>
-
-                    <span v-if="field.type == 'select'">
-                        {{field.options[data[field.key]]}}
-                    </span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                        <span v-if="field.type == 'select'">
+                            {{field.options[data[field.key]]}}
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 </template>
 

@@ -49,7 +49,7 @@ const map = require('./modules/map.vue');
 const network = require('./modules/network.vue');
 
 const router = new VueRouter({
-    mode: 'hash',
+    mode: 'history',
     base: __dirname,
     routes: [{
             path: '/',
