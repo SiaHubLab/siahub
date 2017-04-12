@@ -120,15 +120,20 @@ export default {
             searchQuery: '',
             mode: 'active',
             sortKey: 'used',
-            gridColumns: ['id', 'host', 'totalstorage', 'used', 'used_percent', 'price', 'actions'],
+            gridColumns: ['score', 'host', 'totalstorage', 'used', 'used_percent', 'price', 'actions'],
             formatters: {
                 actions: function(str, entry){
                     return {
                         view: '/host/'+entry.id
                     }
                 },
+                score: function(str, entry, raw){
+                    var scores = JSON.parse(entry.score);
+                    var score = _.reduce(scores, function(score, val){ return score*Big(val).toFixed(5); }, 1);
+                    return Big(score).toFixed(8);
+                },
                 host: function(str, entry, raw){
-                    return str+"<sup>"+entry.netaddress+"<sup>";
+                    return entry.netaddress;
                 },
                 price: function(str, entry, raw){
                     if(raw) return Math.round(entry.storageprice/1e12*4320);

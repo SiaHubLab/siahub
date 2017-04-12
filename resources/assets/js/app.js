@@ -2,12 +2,21 @@ require('./utils');
 require('./bootstrap');
 
 window.moment = require('moment');
+window.Big = require('big.js');
+
 
 import Toasted from 'vue-toasted';
 import VueRouter from 'vue-router';
 import store from './store';
 import VueHighcharts from 'vue-highcharts';
 import Highcharts from 'highcharts/highstock';
+import Raven from 'raven-js';
+import RavenVue from 'raven-js/plugins/vue';
+
+Raven
+    .config('https://5afe3df5eb6a45b09417b5a18edba377@sentry.io/157349')
+    .addPlugin(RavenVue, Vue)
+    .install();
 
 Vue.directive('tooltip', function(el, binding) {
     $(el).attr('data-toggle', 'tooltip')
@@ -27,6 +36,7 @@ Vue.use(Toasted, {
     position: "bottom-right",
     duration: 2000
 });
+
 Vue.use(VueRouter);
 Vue.use(VueHighcharts, {
     Highcharts

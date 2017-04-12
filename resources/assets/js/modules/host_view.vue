@@ -21,13 +21,18 @@
         </div>
         <div class="col-md-6">
             <viewer :fields="fields" :data="hostData"></viewer>
-            <p class="alert alert-info">Uptime/downtime data collected locally by SiaHub wallet and may not provide exact information.</p>
         </div>
     </div>
 
     <div v-if="chartData" class="row">
         <div class="col-md-12">
               <highstock :options="chartData" ref="highcharts"></highstock>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <viewer :fields="allFields" :data="hostData"></viewer>
         </div>
     </div>
     <br />
@@ -162,6 +167,24 @@ export default {
                 .then((response) => {
                     this.hostData = response.data;
                     this.loading = false;
+
+                    for(var i in this.hostData){
+                        if(i === "history") continue;
+
+                        this.$set(this.allFields, i, {
+                            type: 'text',
+                            name: i,
+                            key: i,
+                            formatter: (i == 'score') ? function(str, entry){
+                                var scores = JSON.parse(entry.score);
+                                var resp = "";
+                                for(var z in scores){
+                                    resp += "<p>"+z+": "+scores[z]+"</p>"
+                                }
+                                return resp;
+                            }:false
+                        });
+                    }
                 })
                 .catch((error) => {
                     this.error = error.response.data;
@@ -206,6 +229,7 @@ export default {
             error: false,
             moment: window.moment,
             hostData: {},
+            allFields: {},
             fields: {
                 key: {
                     type: 'text',
@@ -234,7 +258,7 @@ export default {
                                 rate = (entry.historicuptime/entry.historicdowntime*100).toFixed(2);
                             }
                             var time = (+new Date())-uptime;
-                            return window.moment(time).toNow(true)+' - '+rate+'%';
+                            return window.moment(time).toNow(true)+' - '+rate+'%'+'<br>*Uptime/downtime data collected locally by SiaHub wallet and may not provide exact information.';
                         } else {
                             return 'not enough data collected';
                         }
@@ -254,6 +278,16 @@ export default {
                         }
                     }
                 },
+                score: {
+                    type: 'text',
+                    name: 'Score',
+                    key: 'score',
+                    formatter: function(str, entry){
+                        var scores = JSON.parse(entry.score);
+                        var score = _.reduce(scores, function(score, val){ return score*Big(val).toFixed(5); }, 1);
+                        return Big(score).toFixed(8);
+                    }
+                }
             }
         };
     }

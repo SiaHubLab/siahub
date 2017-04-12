@@ -21,6 +21,7 @@
     "google-maps": "^3.2.1",
     "highcharts": "^5.0.10",
     "moment": "^2.18.1",
+    "raven-js": "^3.14.0",
     "vue-highcharts": "0.0.9",
     "vue-quill-editor": "^2.0.0",
     "vue-toasted": "^1.0.26",

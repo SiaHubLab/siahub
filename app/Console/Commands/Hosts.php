@@ -57,6 +57,7 @@ class Hosts extends Command
                     $db_host->fill($host);
                     $db_host->algorithm = $host['publickey']['algorithm'];
                     $db_host->key = $host['publickey']['key'];
+                    $db_host->score = json_encode($host['scorebreakdown']);
 
                     $last_scan = end($host['scanhistory']);
 
@@ -67,8 +68,6 @@ class Hosts extends Command
                     $db_host->host = (filter_var($hostname, FILTER_VALIDATE_IP)) ? $hostname:gethostbyname($hostname);
                     if ($last_scan['success']) {
                         $db_host->last_seen = strtotime(explode('.', $last_scan['timestamp'])[0].env('SIA_TIME_OFFSET'));
-                        echo "last seen: ";
-                        var_dump($last_scan, explode('.', $last_scan['timestamp'])[0]);
                     }
                     $db_host->active = $last_scan['success'];
 
@@ -78,6 +77,14 @@ class Hosts extends Command
                         $db_host->history()->create($host);
                         echo "History added".PHP_EOL;
                     }
+
+                    // if ($db_host->active) {
+                    //     $scores = array_values($host['scorebreakdown']);
+                    //     $score = array_reduce($scores, function ($a, $b) {
+                    //         return $a*$b;
+                    //     }, 1);
+                    //     var_dump($scores, $score);
+                    // }
 
                     echo "Saved {$db_host->netaddress}".PHP_EOL;
                 } catch (Exception $e) {
