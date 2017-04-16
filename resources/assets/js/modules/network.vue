@@ -390,7 +390,7 @@ export default {
                     text: 'Pie title'
                 },
                 tooltip: {
-                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}% ({point.y})</b>'
                 },
                 plotOptions: {
                     pie: {

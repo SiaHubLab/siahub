@@ -75,7 +75,7 @@ export default {
                     </div><br />';
                 }
 
-                contentString = contentString+'<p><a href="/#/host/'+point.host.id+'" class="btn btn-info btn=sm">View Host</a></p>';
+                contentString = contentString+'<p><a href="/host/'+point.host.id+'" class="btn btn-info btn=sm">View Host</a></p>';
 
                 var infowindow = new google.maps.InfoWindow({
                     content: contentString

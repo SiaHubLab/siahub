@@ -14,3 +14,4 @@
 //Auth::routes();
 
 Route::get('{catchall?}', 'HomeController@index');
+Route::get('host/{catchall?}', 'HomeController@index');
