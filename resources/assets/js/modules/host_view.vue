@@ -3,17 +3,16 @@
     <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    {{hostData.key}}
+                <div class="panel-heading"  v-html="used_percent()">
+                    #{{hostData.id}}
                 </div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <p>Storage: {{totalstorage()}}</p>
-                            <p>Used: {{used()}}</p>
-                            <p v-html="used_percent()"></p>
+                            <p>Wallet Version: {{hostData.version}}</p>
+                            <p v-if="walletOutdated()" class="alert alert-danger">Wallet is outdated, don't forget to upgrade your wallet to 1.2.0</p>
                             <p>Price: {{price()}}</p>
-                            <p><span class="label label-info" style="font-size: 100%;">Last success check: {{moment.utc(hostData.last_seen*1000).format('dddd, MMMM Do YYYY, HH:mm:ss z')}}</span></p>
+                            <p><span class="label label-info" style="font-size: 100%;">Last success check: {{moment.utc(hostData.last_seen*1000).format('DD/MM/YY HH:mm z')}}</span></p>
                         </div>
                     </div>
                 </div>
@@ -191,7 +190,11 @@ export default {
                     this.loading = false;
                 });
         },
+        walletOutdated: function(){
+            if(!this.hostData) return false;
 
+            return versionCompare(this.hostData.version, '1.2.0');
+        },
         price: function(){
             if(!this.hostData) return 'loading';
 
@@ -219,7 +222,7 @@ export default {
             var color = "rgba("+color_num+", "+ Math.max(0, 150 - color_num) +", 0, 0.7)"
             return '<div class="progress">\
             <div class="progress-bar" style="background-color: '+color+';width:'+(percent-15)+'%;"></div>\
-            <div class="progress-bar" style="background-color: '+color+';width:15%;">'+percent+'%</div>\
+            <div class="progress-bar" style="background-color: '+color+';width:15%;">'+percent+'% ('+ this.used() +' / '+ this.totalstorage() +')</div>\
             </div>';
         },
     },

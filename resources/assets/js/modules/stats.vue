@@ -71,10 +71,10 @@ export default {
         averagePrice: function(raw){
             if(!this.hosts) return 'loading';
             var result = this.hosts.reduce(function(a, b){
-                        return a + Math.round(b.storageprice/1e12*4320);
+                        return a + (Math.round(b.storageprice/1e12*4320)*(parseInt(b.totalstorage)/1000/1000/1000));
                     }, 0);
 
-            return (result/_.filter(this.hosts, (o) => o.storageprice > 0).length*this.ticker.price_usd).toFixed(2);
+            return (result/(this.totalStorage(true)/1000/1000/1000)*this.ticker.price_usd).toFixed(2);
         },
         minPrice: function(raw){
             if(!this.hosts) return 'loading';
