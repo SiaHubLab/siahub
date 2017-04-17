@@ -1,5 +1,6 @@
 export const state = {
-    hosts: JSON.parse('[]')
+    hosts: JSON.parse('[]'),
+    appMode: localStorage.getItem('theme')
 }
 
 export const mutations = {
@@ -7,5 +8,10 @@ export const mutations = {
         hosts
     }) {
         state.hosts = hosts
+    },
+    appModeChange(state, {
+        mode
+    }) {
+        state.appMode = mode
     },
 }

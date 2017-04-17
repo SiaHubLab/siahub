@@ -39,6 +39,7 @@
 
 <script>
 import Highcharts from 'highcharts';
+import { mapGetters } from 'vuex'
 
 export default {
     mounted() {
@@ -52,12 +53,17 @@ export default {
         this.refresh();
     },
     computed: {
+        appMode(){
+            return this.$store.getters.appMode;
+        },
         versionsData(){
             if(typeof this.versions !== "object") return false;
             var totalHosts = this.versions.reduce(function(a, b){
                 return a + parseInt(b.hosts);
             }, 0);
             var options = _.cloneDeep(this.pieConfig);
+            options.chart.backgroundColor = (this.appMode === "") ? "#fff":"#252525",
+            options.plotOptions.pie.borderColor = (this.appMode === "") ? "#fff":"#dadada",
             options.title.text = 'Sia version';
             options.series = [{
                 name: 'Active Hosts',
@@ -82,10 +88,15 @@ export default {
             }, 0);
 
             var coptions = _.cloneDeep(this.pieConfig);
+            coptions.chart.backgroundColor = (this.appMode === "") ? "#fff":"#252525",
+            coptions.plotOptions.pie.borderColor = (this.appMode === "") ? "#fff":"#dadada",
             coptions.title.text = 'Countries by active hosts';
 
             coptions.plotOptions.pie.dataLabels = {
-                enabled: true
+                enabled: true,
+                color: (this.appMode === "") ? "#000":"#dadada",
+                borderWidth: 0,
+                style: {textOutline: '0'}
             };
             coptions.plotOptions.pie.showInLegend = false;
 
@@ -113,6 +124,8 @@ export default {
             }, 0);
 
             var options = _.cloneDeep(this.pieConfig);
+            options.chart.backgroundColor = (this.appMode === "") ? "#fff":"#252525",
+            options.plotOptions.pie.borderColor = (this.appMode === "") ? "#fff":"#dadada",
             options.title.text = 'Continents by active hosts';
             options.series = [{
                 name: 'Active Hosts',
@@ -136,8 +149,42 @@ export default {
             if(typeof this.network !== "object") return false;
 
             var options = _.cloneDeep(this.stockConfig);
+            options.chart.backgroundColor = (this.appMode === "") ? "#fff":"#252525",
             options.title = {text: "Network hosts"};
-
+            options.rangeSelector = {
+                buttonTheme: { // styles for the buttons
+                    fill: 'none',
+                    stroke: 'none',
+                    'stroke-width': 0,
+                    r: 8,
+                    style: {
+                        color: (this.appMode === "") ? "#039":"#dadada",
+                        fontWeight: 'bold'
+                    },
+                    states: {
+                        hover: {
+                        },
+                        select: {
+                            fill: (this.appMode === "") ? "#039":"#dadada",
+                            style: {
+                                color: 'white'
+                            }
+                        }
+                        // disabled: { ... }
+                    }
+                },
+                inputBoxBorderColor: 'gray',
+                inputBoxWidth: 120,
+                inputBoxHeight: 18,
+                inputStyle: {
+                    color: (this.appMode === "") ? "#039":"#dadada",
+                    fontWeight: 'bold'
+                },
+                labelStyle: {
+                    color: 'silver',
+                    fontWeight: 'bold'
+                }
+            };
             options.yAxis = [{
                 title: {text: 'Active Hosts'},
                 labels: { format: '{value:.2f}' },
@@ -195,8 +242,42 @@ export default {
             if(typeof this.network !== "object") return false;
 
             var options = _.cloneDeep(this.stockConfig);
+            options.chart.backgroundColor = (this.appMode === "") ? "#fff":"#252525",
             options.title = {text: "Network storage"};
-
+            options.rangeSelector = {
+                buttonTheme: { // styles for the buttons
+                    fill: 'none',
+                    stroke: 'none',
+                    'stroke-width': 0,
+                    r: 8,
+                    style: {
+                        color: (this.appMode === "") ? "#039":"#dadada",
+                        fontWeight: 'bold'
+                    },
+                    states: {
+                        hover: {
+                        },
+                        select: {
+                            fill: (this.appMode === "") ? "#039":"#dadada",
+                            style: {
+                                color: 'white'
+                            }
+                        }
+                        // disabled: { ... }
+                    }
+                },
+                inputBoxBorderColor: 'gray',
+                inputBoxWidth: 120,
+                inputBoxHeight: 18,
+                inputStyle: {
+                    color: (this.appMode === "") ? "#039":"#dadada",
+                    fontWeight: 'bold'
+                },
+                labelStyle: {
+                    color: 'silver',
+                    fontWeight: 'bold'
+                }
+            };
             options.yAxis = [{
                 title: {text: 'Total storage'},
                 labels: { format: '{value:.2f}' },
@@ -254,6 +335,42 @@ export default {
             if(typeof this.network !== "object") return false;
 
             var options = _.cloneDeep(this.stockConfig);
+            options.chart.backgroundColor = (this.appMode === "") ? "#fff":"#252525",
+            options.rangeSelector = {
+                buttonTheme: { // styles for the buttons
+                    fill: 'none',
+                    stroke: 'none',
+                    'stroke-width': 0,
+                    r: 8,
+                    style: {
+                        color: (this.appMode === "") ? "#039":"#dadada",
+                        fontWeight: 'bold'
+                    },
+                    states: {
+                        hover: {
+                        },
+                        select: {
+                            fill: (this.appMode === "") ? "#039":"#dadada",
+                            style: {
+                                color: 'white'
+                            }
+                        }
+                        // disabled: { ... }
+                    }
+                },
+                inputBoxBorderColor: 'gray',
+                inputBoxWidth: 120,
+                inputBoxHeight: 18,
+                inputStyle: {
+                    color: (this.appMode === "") ? "#039":"#dadada",
+                    fontWeight: 'bold'
+                },
+                labelStyle: {
+                    color: 'silver',
+                    fontWeight: 'bold'
+                }
+            };
+
             options.title = {text: "Network prices"};
 
             options.yAxis = [{
@@ -337,7 +454,7 @@ export default {
                     plotBackgroundColor: null,
                     plotBorderWidth: null,
                     plotShadow: false,
-                    type: 'pie'
+                    type: 'pie',
                 },
                 credits: { enabled: false },
                 title: {
@@ -371,7 +488,9 @@ export default {
                     y: 100,
                     shadow: true
                 },
-                chart: { type: "area" },
+                chart: {
+                    type: "area",
+                },
                 rangeSelector: {
                     buttons: [
                         { type : 'week', count : 1, text : '1w' },

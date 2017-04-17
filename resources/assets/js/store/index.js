@@ -8,13 +8,17 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        hosts: []
+        hosts: [],
+        appMode: localStorage.getItem('theme')
     },
     actions,
     getters,
     mutations: {
         [types.HOSTS](state, hosts) {
             state.hosts = hosts;
+        },
+        [types.APPMODE](state, mode) {
+            state.appMode = mode;
         }
     }
 })

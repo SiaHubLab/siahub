@@ -58,15 +58,50 @@ export default {
         this.refresh();
     },
     computed: {
-        getHostById(){
-            return this.$store.getters.getHostById;
+        appMode(){
+            return this.$store.getters.appMode;
         },
         chartData(){
             if(typeof this.hostData.history !== "object") return false;
 
             var options = {
-                chart: { type: "area" },
+                chart: {
+                    type: "area",
+                    backgroundColor: (this.appMode === "") ? "#fff":"#252525",
+                },
                 rangeSelector: {
+                    buttonTheme: { // styles for the buttons
+                        fill: 'none',
+                        stroke: 'none',
+                        'stroke-width': 0,
+                        r: 8,
+                        style: {
+                            color: (this.appMode === "") ? "#039":"#dadada",
+                            fontWeight: 'bold'
+                        },
+                        states: {
+                            hover: {
+                            },
+                            select: {
+                                fill: (this.appMode === "") ? "#039":"#dadada",
+                                style: {
+                                    color: 'white'
+                                }
+                            }
+                            // disabled: { ... }
+                        }
+                    },
+                    inputBoxBorderColor: 'gray',
+                    inputBoxWidth: 120,
+                    inputBoxHeight: 18,
+                    inputStyle: {
+                        color: (this.appMode === "") ? "#039":"#dadada",
+                        fontWeight: 'bold'
+                    },
+                    labelStyle: {
+                        color: 'silver',
+                        fontWeight: 'bold'
+                    },
                     buttons: [
                         { type : 'week', count : 1, text : '1w' },
                         { type : 'month', count : 1, text : '1m' },
@@ -109,11 +144,11 @@ export default {
                     }),
                     tooltip: { valueSuffix: ' GB' },
                      yAxis: 0,
-                     color: '#0000ff',
+                     color: (this.appMode === "") ? "#0000ff":"#3cb6f1",
                      fillColor: {
                         stops: [
-                            [0, Highcharts.Color('#0000ff').setOpacity(0.3).get('rgba')],
-                            [1, Highcharts.Color('#0000ff').setOpacity(0).get('rgba')]
+                            [0, Highcharts.Color((this.appMode === "") ? "#0000ff":"#3cb6f1").setOpacity(0.3).get('rgba')],
+                            [1, Highcharts.Color((this.appMode === "") ? "#0000ff":"#3cb6f1").setOpacity(0).get('rgba')]
                         ]
                     },
                     tooltip: { pointFormat: '<span style="color:blue">{series.name}: <b>{point.y:.2f} GB</b></span><br/>' },

@@ -1,6 +1,53 @@
 html {
     overflow-y: scroll;
 }
+
+.btn:focus, .btn.focus, .btn:active:focus, .btn:active.focus, .btn.active:focus, .btn.active.focus {
+    outline: none;
+    outline-offset: 0;
+}
+
+.btn-warning:active:hover, .btn-warning:active:focus, .btn-warning:active.focus, .btn-warning.active:hover, .btn-warning.active:focus, .btn-warning.active.focus, .open > .btn-warning.dropdown-toggle:hover, .open > .btn-warning.dropdown-toggle:focus, .open > .btn-warning.dropdown-toggle.focus {
+    color: #fff;
+    background-color: #debe10;
+    border-color: #bda10e;
+}
+
+.btn-success:active:hover, .btn-success:active:focus, .btn-success:active.focus, .btn-success.active:hover, .btn-success.active:focus, .btn-success.active.focus, .open > .btn-success.dropdown-toggle:hover, .open > .btn-success.dropdown-toggle:focus, .open > .btn-success.dropdown-toggle.focus {
+    color: #fff;
+    background-color: #00804c;
+    border-color: #005c37;
+}
+
+.btn-primary:active:hover, .btn-primary:active:focus, .btn-primary:active.focus, .btn-primary.active:hover, .btn-primary.active:focus, .btn-primary.active.focus, .open > .btn-primary.dropdown-toggle:hover, .open > .btn-primary.dropdown-toggle:focus, .open > .btn-primary.dropdown-toggle.focus {
+    color: #fff;
+    background-color: #009878;
+    border-color: #00745c;
+}
+
+.btn-info:active:hover, .btn-info:active:focus, .btn-info:active.focus, .btn-info.active:hover, .btn-info.active:focus, .btn-info.active.focus, .open > .btn-info.dropdown-toggle:hover, .open > .btn-info.dropdown-toggle:focus, .open > .btn-info.dropdown-toggle.focus,
+.btn-info:active, .btn-info.active, .open > .btn-info.dropdown-toggle {
+    color: #fff;
+    background-color: #0b96eb;
+    border-color: #0a86d3;
+}
+
+.btn-primary:hover,
+.btn-success:hover,
+.btn-warning:hover,
+.btn-default:hover {
+    background-color: inherit;
+    border-color: inherit;
+}
+
+.btn-info:hover {
+    border-color: #0a86d3;
+}
+
+.btn-group > .btn:hover, .btn-group > .btn:focus, .btn-group > .btn:active, .btn-group > .btn.active, .btn-group-vertical > .btn:hover, .btn-group-vertical > .btn:focus, .btn-group-vertical > .btn:active, .btn-group-vertical > .btn.active {
+    z-index: inherit;
+}
+
 .progress {
     position: relative;
     margin-bottom: 0px;
@@ -73,4 +120,54 @@ th.active .arrow {
     position: absolute;
     top: 10px;
     z-index: 5;
+}
+
+.app.night-mode,
+body.night-mode {
+    color: #dadada;
+    background-color: #383838;
+}
+
+.night-mode {
+    .img-thumbnail {
+        background-color: #383838;
+    }
+
+    .navbar-inverse .navbar-nav>li>a {
+        color: #dadada;
+    }
+    .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+        color: $navbar-inverse-link-hover-color;
+    }
+
+    .table-white{
+        background-color: #585858;
+    }
+
+    .table > thead > tr > td.active, .table > thead > tr > th.active, .table > thead > tr.active > td, .table > thead > tr.active > th, .table > tbody > tr > td.active, .table > tbody > tr > th.active, .table > tbody > tr.active > td, .table > tbody > tr.active > th, .table > tfoot > tr > td.active, .table > tfoot > tr > th.active, .table > tfoot > tr.active > td, .table > tfoot > tr.active > th {
+        background-color: #404040;
+    }
+
+    .table-bordered > thead > tr > th, .table-bordered > thead > tr > td {
+        border-bottom-width: 1px;
+    }
+
+    .arrow.dsc {
+        border-top: 4px solid #d4d4d4;
+    }
+
+    .panel,
+    .panel-default > .panel-heading {
+        background-color: #585858;
+    }
+
+    .form-control {
+        background-color: #252525;
+    }
+
+    .btn-default {
+        background-color: #252525;
+        color: #dadada;
+        border-color: transparent;
+    }
 }

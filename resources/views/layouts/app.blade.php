@@ -18,9 +18,9 @@
     </script>
 </head>
 <body>
-    <div id="app">
+    <div class="app" :class="appMode">
         <nav class="navbar navbar-inverse navbar-static-top">
-            <div class="container-fluid app">
+            <div class="container-fluid">
                 <div class="navbar-header">
 
                     <!-- Collapsed Hamburger -->
@@ -45,10 +45,11 @@
                         <li><router-link to="/network">Network</router-link></li>
                     </ul>
                     <stats></stats>
+                    <theme></theme>
                 </div>
             </div>
         </nav>
-        <div class="container-fluid app">
+        <div class="container-fluid">
             <wallet></wallet>
             <div class="row">
                 <div class="col-md-12">

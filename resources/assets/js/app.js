@@ -9,6 +9,9 @@ import VueRouter from 'vue-router';
 import store from './store';
 import VueHighcharts from 'vue-highcharts';
 import Highcharts from 'highcharts/highstock';
+import {
+    mapGetters
+} from 'vuex'
 
 Vue.directive('tooltip', function(el, binding) {
     $(el).attr('data-toggle', 'tooltip')
@@ -21,6 +24,7 @@ Vue.directive('tooltip', function(el, binding) {
 Vue.component('grid', require('./components/grid.vue'));
 Vue.component('viewer', require('./components/viewer.vue'));
 Vue.component('stats', require('./modules/stats.vue'));
+Vue.component('theme', require('./modules/theme.vue'));
 Vue.component('wallet', require('./components/wallet.vue'));
 
 Vue.use(Toasted, {
@@ -72,6 +76,12 @@ var divs = document.querySelectorAll('.app');
     // do whatever
     new BaseVue({
         el: div,
-        store
+        store,
+        computed: mapGetters(['appMode']),
+        data() {
+            return {
+                appstyle: this.appMode
+            }
+        }
     });
 });
