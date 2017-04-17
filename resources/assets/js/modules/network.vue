@@ -141,12 +141,12 @@ export default {
             options.yAxis = [{
                 title: {text: 'Active Hosts'},
                 labels: { format: '{value:.2f}' },
-                min: 0
+                min: 0,
+                opposite: false
             }, {
                 title: {text: 'Total Hosts'},
                 labels: { format: '{value:.0f}' },
-                min: 0,
-                opposite: false
+                min: 0
             }];
 
             options.series = [{
@@ -177,7 +177,7 @@ export default {
                             y: entry.all_hosts,
                         };
                     }),
-                     yAxis: 0,
+                     yAxis: 1,
                      color: '#0069cb',
                      fillColor: {
                         stops: [
@@ -200,12 +200,12 @@ export default {
             options.yAxis = [{
                 title: {text: 'Total storage'},
                 labels: { format: '{value:.2f}' },
-                min: 0
+                min: 0,
+                opposite: false
             }, {
                 title: {text: 'Used storage'},
                 labels: { format: '{value:.0f}' },
-                min: 0,
-                opposite: false
+                min: 0
             }];
 
             options.series = [{
@@ -236,7 +236,7 @@ export default {
                             y: (parseInt(entry.totalstorage)-parseInt(entry.remainingstorage))/1000/1000/1000,
                         };
                     }),
-                     yAxis: 0,
+                     yAxis: 1,
                      color: '#00cba0',
                      fillColor: {
                         stops: [
@@ -257,39 +257,12 @@ export default {
             options.title = {text: "Network prices"};
 
             options.yAxis = [{
-                title: {text: 'Max. price'},
-                labels: { format: '{value:.2f}' },
-                min: 0
-            }, {
                 title: {text: 'Avg. price'},
-                labels: { format: '{value:.0f}' },
-                min: 0,
-                opposite: false
-            }, {
-                title: {text: 'Min. price'},
                 labels: { format: '{value:.0f}' },
                 min: 0
             }];
 
-            options.series = [{
-                    name: 'Max. price',
-                    turboThreshold: 0,
-                    data: this.network.map((entry) => {
-                        return {
-                            x: parseInt(moment.utc(entry.created_at).format('x')),
-                            y: parseFloat(entry.max_storageprice),
-                        };
-                    }),
-                     yAxis: 0,
-                     color: '#0069cb',
-                     fillColor: {
-                        stops: [
-                            [0, Highcharts.Color('#0069cb').setOpacity(0.3).get('rgba')],
-                            [1, Highcharts.Color('#0069cb').setOpacity(0).get('rgba')]
-                        ]
-                    },
-                    tooltip: { pointFormat: '<span style="color:#0069cb">{series.name}: <b>{point.y:.2f} SC/TB/Mo</b></span><br/>' },
-                },
+            options.series = [
                 {
                     name: 'Avg. price',
                     turboThreshold: 0,
@@ -308,25 +281,6 @@ export default {
                         ]
                     },
                     tooltip: { pointFormat: '<span style="color:#00cba0">{series.name}: <b>{point.y:.2f} SC/TB/Mo</b></span><br/>' },
-                },
-                {
-                    name: 'Min. price',
-                    turboThreshold: 0,
-                    data: this.network.map((entry) => {
-                        return {
-                            x: parseInt(moment.utc(entry.created_at).format('x')),
-                            y: parseFloat(entry.min_storageprice),
-                        };
-                    }),
-                     yAxis: 0,
-                     color: '#cb004c',
-                     fillColor: {
-                        stops: [
-                            [0, Highcharts.Color('#cb004c').setOpacity(0.3).get('rgba')],
-                            [1, Highcharts.Color('#cb004c').setOpacity(0).get('rgba')]
-                        ]
-                    },
-                    tooltip: { pointFormat: '<span style="color:#cb004c">{series.name}: <b>{point.y:.2f} SC/TB/Mo</b></span><br/>' },
                 }
             ];
 
@@ -406,6 +360,17 @@ export default {
             },
 
             stockConfig: {
+                legend: {
+                    enabled: false,
+                    align: 'right',
+                    backgroundColor: 'transparent',
+                    borderColor: 'transparent',
+                    borderWidth: 0,
+                    layout: 'vertical',
+                    verticalAlign: 'top',
+                    y: 100,
+                    shadow: true
+                },
                 chart: { type: "area" },
                 rangeSelector: {
                     buttons: [
