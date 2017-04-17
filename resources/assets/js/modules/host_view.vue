@@ -136,7 +136,6 @@ export default {
                     name: 'Storage',
                     turboThreshold: 0,
                     data: this.hostData.history.map((entry) => {
-                        console.log(+ new Date(entry.created_at), moment.utc(entry.created_at), moment.utc(entry.created_at).format('x'));
                         return {
                             x: parseInt(moment.utc(entry.created_at).format('x')),
                             y: entry.totalstorage/1000/1000/1000,

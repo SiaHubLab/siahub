@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Host;
 use App\Models\NetworkHistory;
 use Illuminate\Support\Facades\Cache;
+use GeoIp2\Database\Reader;
 
 class HostsController extends Controller
 {
@@ -47,17 +48,22 @@ class HostsController extends Controller
         $cache_key = "map_active";
 
         if (!Cache::has($cache_key)) {
+            $reader = new Reader('/usr/share/GeoIP/GeoLite2-City.mmdb');
+
             $points = [];
             $hosts = Host::where('active', 1);
             foreach ($hosts->get() as $host) {
-                $info = geoip_record_by_name($host->host);
-                if ($info) {
-                    $points[] = ['host' => $host, 'lat' => $info['latitude'], 'lng' => $info['longitude']];
-                    if (empty($host->continent) || $host->country) {
-                        $host->continent = $info['continent_code'];
-                        $host->country = $info['country_name'];
-                        $host->save();
+                try {
+                    $info = $reader->city($host->host);
+                    if ($info) {
+                        $points[] = ['host' => $host, 'lat' => $info->location->latitude, 'lng' => $info->location->longitude];
+                        if (empty($host->continent) || $host->country) {
+                            $host->continent = $info->continent->names['en'];
+                            $host->country = $info->country->name;
+                            $host->save();
+                        }
                     }
+                } catch (\Exception $e) {
                 }
             }
             Cache::put($cache_key, $points, 5);
