@@ -78,16 +78,8 @@ class Hosts extends Command
                         echo "History added".PHP_EOL;
                     }
 
-                    // if ($db_host->active) {
-                    //     $scores = array_values($host['scorebreakdown']);
-                    //     $score = array_reduce($scores, function ($a, $b) {
-                    //         return $a*$b;
-                    //     }, 1);
-                    //     var_dump($scores, $score);
-                    // }
-
                     echo "Saved {$db_host->netaddress}".PHP_EOL;
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     echo "err host". $e->getMessage();
                 }
 

@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/wallet_status', "HostsController@wallet_status");
+Route::get('/wallet_status', "HostsController@walletStatus");
 Route::get('/hosts/{mode}', "HostsController@index");
 Route::get('/map', "HostsController@map");
 Route::get('/versions', "HostsController@versions");

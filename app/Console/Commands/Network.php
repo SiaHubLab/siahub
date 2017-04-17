@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Models\Host;
 use App\Models\NetworkHistory;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Cache;
 
 class Network extends Command
 {
@@ -43,15 +42,15 @@ class Network extends Command
         try {
             $hosts = Host::where('active', 1)->get();
 
-            $totalstorage = $hosts->reduce(function ($carry, $item) {
+            $totalstorage = $hosts->reduce(function ($carry, Host $item) {
                 return $carry + $item->totalstorage;
             });
 
-            $remainingstorage = $hosts->reduce(function ($carry, $item) {
+            $remainingstorage = $hosts->reduce(function ($carry, Host $item) {
                 return $carry + $item->remainingstorage;
             });
 
-            $price = $hosts->reduce(function ($carry, $item) {
+            $price = $hosts->reduce(function ($carry, Host $item) {
                 return $carry + (($item->storageprice/1e12*4320)*$item->totalstorage/1000/1000/1000);
             });
             echo "prices: ".$price.PHP_EOL;
@@ -70,7 +69,7 @@ class Network extends Command
             $history->max_storageprice = $max_price;
             $history->created_at = date('Y-m-d H:i:s');
             $history->save();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo $e->getMessage();
         }
     }

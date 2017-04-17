@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Cache;
 
 class HostsController extends Controller
 {
-    public function wallet_status()
+    public function walletStatus()
     {
         return response()->json(Cache::get('wallet_online'));
     }
@@ -71,7 +71,6 @@ class HostsController extends Controller
         $cache_key = "versions_active";
 
         if (!Cache::has($cache_key)) {
-            $points = [];
             $hosts = Host::selectRaw('count(*) as hosts, version')
                           ->where('active', 1)
                           ->groupBy('version')
@@ -88,7 +87,6 @@ class HostsController extends Controller
         $cache_key = "countries_active";
 
         if (!Cache::has($cache_key)) {
-            $points = [];
             $hosts = Host::selectRaw('count(*) as hosts, country')
                           ->where('active', 1)
                           ->groupBy('country')
@@ -105,7 +103,6 @@ class HostsController extends Controller
         $cache_key = "continents_active";
 
         if (!Cache::has($cache_key)) {
-            $points = [];
             $hosts = Host::selectRaw('count(*) as hosts, continent')
                           ->where('active', 1)
                           ->groupBy('continent')
@@ -122,7 +119,6 @@ class HostsController extends Controller
         $cache_key = "network_active";
 
         if (!Cache::has($cache_key)) {
-            $points = [];
             $hosts = NetworkHistory::orderBy('created_at', 'asc')->get();
             Cache::put($cache_key, $hosts, 5);
         }
