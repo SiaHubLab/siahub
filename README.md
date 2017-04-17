@@ -1,4 +1,4 @@
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/b07ae6ef-9750-4212-810b-8ac92f2eaf06/big.png)](https://insight.sensiolabs.com/projects/b07ae6ef-9750-4212-810b-8ac92f2eaf06)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/b07ae6ef-9750-4212-810b-8ac92f2eaf06/mini.png)](https://insight.sensiolabs.com/projects/b07ae6ef-9750-4212-810b-8ac92f2eaf06) [![license](https://img.shields.io/github/license/S-anasol/siahub.svg)](https://github.com/S-anasol/siahub) [![GitHub pull requests](https://img.shields.io/github/issues-pr/S-anasol/siahub.svg)]() [![](https://img.shields.io/github/issues-closed-raw/S-anasol/siahub.svg)]() [![GitHub stars](https://img.shields.io/github/stars/S-anasol/siahub.svg?style=social&label=Star)]()
 
 <p align="center">
 
