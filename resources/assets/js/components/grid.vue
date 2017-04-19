@@ -70,6 +70,9 @@ export default {
     watch: {
         filterKey: function(){
             this.page = 1;
+        },
+        data: function(){
+            this.page = 1;
         }
     },
     computed: {
@@ -117,7 +120,7 @@ export default {
             return data
         },
         pages: function(){
-            return (this.data) ? Math.floor(this.filteredDataLength/this.perpage)+1:1;
+            return (this.data) ? Math.ceil(this.filteredDataLength/this.perpage):1;
         }
     },
     filters: {
