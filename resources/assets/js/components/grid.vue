@@ -29,8 +29,8 @@
               <td :colspan="columns.length">
                   <nav>
                     <ul class="pager">
-                      <li :class="(this.page <= 1) ? 'disabled':''"><a @click.prevent="prevPage" href="#">To the left</a></li>
-                      <li :class="(this.page >= this.pages) ? 'disabled':''"><a @click.prevent="nextPage" href="#">To the right</a></li>
+                      <li :class="(this.page <= 1) ? 'disabled':''"><a @click.prevent="prevPage" href="#">Previous</a></li>
+                      <li :class="(this.page >= this.pages) ? 'disabled':''"><a @click.prevent="nextPage" href="#">Next</a></li>
                     </ul>
                   </nav>
               </td>
