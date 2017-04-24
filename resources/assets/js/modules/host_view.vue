@@ -327,7 +327,7 @@ export default {
                     formatter: function(str, entry){
                         var scores = JSON.parse(entry.score);
                         var score = _.reduce(scores, function(score, val){ return score*Big(val).toFixed(16); }, 1);
-                        return Big(score).toFixed(8);
+                        return Big(score).toFixed(16);
                     }
                 }
             }

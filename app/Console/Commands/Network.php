@@ -53,7 +53,18 @@ class Network extends Command
             $price = $hosts->reduce(function ($carry, Host $item) {
                 return $carry + (($item->storageprice/1e12*4320)*$item->totalstorage/1000/1000/1000);
             });
-            echo "prices: ".$price.PHP_EOL;
+
+            $prices_ =  [];
+            foreach ($hosts as $item) {
+                $prices_ = array_merge($prices_, array_fill(0, round($item->totalstorage/1000/1000/1000), $item->storageprice/1e12*4320));
+            }
+
+            $prices__ = collect($prices_);
+
+            echo "raw median: ".($hosts->median('storageprice')/1e12*4320).PHP_EOL;
+            echo "raw avg: ".($hosts->avg('storageprice')/1e12*4320).PHP_EOL;
+            echo "gb weight median: ".$prices__->median().PHP_EOL;
+            echo "gb weight avg: ".($price/($totalstorage/1000/1000/1000)).PHP_EOL;
             echo "storage gb: ".($totalstorage/1000/1000/1000).PHP_EOL;
             $avg_price = $price/($totalstorage/1000/1000/1000);
             $min_price = $hosts->min('storageprice')/1e12*4320;
