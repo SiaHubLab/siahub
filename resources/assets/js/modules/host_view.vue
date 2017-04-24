@@ -128,6 +128,11 @@ export default {
                     labels: { format: '{value:.0f} SC/day' },
                     min: 0,
                     opposite: false
+                }, {
+                    title: {text: 'Used'},
+                    labels: { format: '{value:.0f} GB/day' },
+                    min: 0,
+                    opposite: false
                 }],
                 plotOptions: {
                     area: { fillColor: { linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 } } }
@@ -161,7 +166,7 @@ export default {
                         };
                     }),
                     tooltip: { valueSuffix: ' GB' },
-                    yAxis: 0,
+                    yAxis: 2,
                     color: '#ff0000',
                     fillColor: {
                        stops: [
@@ -321,7 +326,7 @@ export default {
                     key: 'score',
                     formatter: function(str, entry){
                         var scores = JSON.parse(entry.score);
-                        var score = _.reduce(scores, function(score, val){ return score*Big(val).toFixed(5); }, 1);
+                        var score = _.reduce(scores, function(score, val){ return score*Big(val).toFixed(16); }, 1);
                         return Big(score).toFixed(8);
                     }
                 }

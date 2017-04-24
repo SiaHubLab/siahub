@@ -130,7 +130,7 @@ export default {
                 score: function(str, entry, raw){
                     try {
                         var scores = JSON.parse(entry.score);
-                        var score = _.reduce(scores, function(score, val){ return score*Big(val).toFixed(5); }, 1);
+                        var score = _.reduce(scores, function(score, val){ return score*Big(val).toFixed(8); }, 1);
                         return Big(score).toFixed(8);
                     } catch(err) {
                         return 0;
