@@ -18,6 +18,6 @@ export const mutations = {
     homeSearchChange(state, {
         mode
     }) {
-        state.appMode = mode
+        state.homeSearch = mode
     },
 }
