@@ -5,3 +5,7 @@ export const hosts = state => {
 export const appMode = state => {
     return state.appMode
 }
+
+export const homeSearch = state => {
+    return state.homeSearch
+}

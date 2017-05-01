@@ -31,16 +31,23 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
     mounted() {
         this.refresh();
+        this.searchQuery = this.homeSearch;
     },
     watch: {
         mode: function() {
             this.refresh()
+        },
+        searchQuery: function(){
+            this.updateSearch(this.searchQuery);
         }
     },
-    computed: mapGetters(['hosts']),
+    computed: mapGetters(['hosts', 'homeSearch']),
     methods: {
         updateHosts(hosts) {
           this.$store.dispatch('updateHosts', hosts);
+        },
+        updateSearch(hosts) {
+          this.$store.dispatch('updateHomeSearch', hosts);
         },
         refresh(){
             if(this.loading) return false;
@@ -117,7 +124,7 @@ export default {
         return {
             loading: false,
             error: false,
-            searchQuery: '',
+            searchQuery: this.homeSearch,
             mode: 'active',
             sortKey: 'used',
             gridColumns: ['score', 'host', 'totalstorage', 'used', 'used_percent', 'price', 'actions'],

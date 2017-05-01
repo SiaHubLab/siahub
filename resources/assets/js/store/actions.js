@@ -12,3 +12,10 @@ export const updateAppMode = ({
     localStorage.setItem('theme', mode);
     commit(types.APPMODE, mode);
 }
+
+export const updateHomeSearch = ({
+    commit
+}, mode) => {
+    localStorage.setItem('homeSearch', mode);
+    commit(types.HOMESEARCH, mode);
+}

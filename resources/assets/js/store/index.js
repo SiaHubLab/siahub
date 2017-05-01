@@ -9,7 +9,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         hosts: [],
-        appMode: localStorage.getItem('theme')
+        appMode: localStorage.getItem('theme'),
+        homeSearch: localStorage.getItem('homeSearch')
     },
     actions,
     getters,
@@ -19,6 +20,9 @@ export default new Vuex.Store({
         },
         [types.APPMODE](state, mode) {
             state.appMode = mode;
+        },
+        [types.HOMESEARCH](state, mode) {
+            state.homeSearch = mode;
         }
     }
 })
