@@ -135,14 +135,15 @@ export default {
                     }
                 },
                 score: function(str, entry, raw){
+                    var scale = (raw) ? 30:8;
                     try {
                         var scores = JSON.parse(entry.score);
                         var score = _.reduce(scores, function(score, val, key){
                             if(key === 'score') return score;
 
-                            return score*Big(val).toFixed(8);
+                            return score*Big(val).toFixed(scale);
                          }, 1);
-                        return Big(score).toFixed(8);
+                        return Big(score).toFixed(scale)+' / #'+entry.rank;
                     } catch(err) {
                         return 0;
                     }

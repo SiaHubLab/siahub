@@ -1,7 +1,7 @@
 <template>
     <ul class="nav navbar-nav navbar-right">
         <li>
-            <a href="#" @click.prevent="toggleTheme()" v-html="(this.appMode === '') ? 'Night':'Day'"></a>
+            <a href="#" @click.prevent="toggleTheme()" v-html="(this.appMode === 'night-mode') ? 'Day':'Night'"></a>
         </li>
     </ul>
 </template>

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b991adb72fcba58735dc8d5d6fbfeab1",
+    "content-hash": "b9d3cb5f1c4b38c14c4466fb570e08f3",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1486,6 +1486,56 @@
                 "server"
             ],
             "time": "2016-10-12T14:08:15+00:00"
+        },
+        {
+            "name": "litipk/php-bignumbers",
+            "version": "0.8.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Litipk/php-bignumbers.git",
+                "reference": "bb64b59e11b73daa4e21148a62fa6ff3fe75d159"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Litipk/php-bignumbers/zipball/bb64b59e11b73daa4e21148a62fa6ff3fe75d159",
+                "reference": "bb64b59e11b73daa4e21148a62fa6ff3fe75d159",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "^0.4",
+                "phpunit/phpunit": "~6.0",
+                "psy/psysh": "^0.8",
+                "squizlabs/php_codesniffer": "^2.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Litipk\\BigNumbers\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andrés Correa Casablanca",
+                    "email": "castarco@litipk.com"
+                }
+            ],
+            "description": "An opensource library to handle immutable big numbers inside PHP applications",
+            "keywords": [
+                "bcmath",
+                "bignum",
+                "decimal",
+                "gmp",
+                "number"
+            ],
+            "time": "2017-04-30T19:01:13+00:00"
         },
         {
             "name": "maxmind-db/reader",

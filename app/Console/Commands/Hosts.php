@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Host;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
+use Litipk\BigNumbers\Decimal;
 
 class Hosts extends Command
 {
@@ -41,6 +42,27 @@ class Hosts extends Command
     {
         $collect_hosts = $this->argument('hosts');
 
+
+        $hosts = Host::where('active', 1)->get();
+        $hosts_arr = $hosts->toArray();
+        usort($hosts_arr, function ($a, $b) {
+            $host_score = json_decode($a['score'], true);
+            $a = (!empty($host_score['score'])) ? $host_score['score']:0;
+
+            $host_score = json_decode($b['score'], true);
+            $b = (!empty($host_score['score'])) ? $host_score['score']:0;
+
+            return Decimal::fromFloat($b)->comp(Decimal::fromFloat($a));
+        });
+
+        $i = 1;
+        foreach ($hosts_arr as $key => $host) {
+            $host_ = Host::find($host['id']);
+            $host_->rank = $i;
+            $host_->save();
+            $i++;
+        }
+
         try {
             $client = new \GuzzleHttp\Client();
             $res = $client->request('GET', env('SIA_ADDRESS').'/hostdb/all');
@@ -57,6 +79,15 @@ class Hosts extends Command
                     $db_host->fill($host);
                     $db_host->algorithm = $host['publickey']['algorithm'];
                     $db_host->key = $host['publickey']['key'];
+                    $score = 1;
+                    foreach ($host['scorebreakdown'] as $key => $val) {
+                        if ($key == "score") {
+                            continue;
+                        }
+
+                        $score = $score*$val;
+                    }
+                    $host['scorebreakdown']['score'] = sprintf('%.30f', $score);
                     $db_host->score = json_encode($host['scorebreakdown']);
 
                     $last_scan = end($host['scanhistory']);

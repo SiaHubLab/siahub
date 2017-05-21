@@ -62,8 +62,8 @@ export default {
                 return a + parseInt(b.hosts);
             }, 0);
             var options = _.cloneDeep(this.pieConfig);
-            options.chart.backgroundColor = (this.appMode === "") ? "#fff":"#252525",
-            options.plotOptions.pie.borderColor = (this.appMode === "") ? "#fff":"#dadada",
+            options.chart.backgroundColor = (this.appMode !== "night-mode") ? "#fff":"#252525",
+            options.plotOptions.pie.borderColor = (this.appMode !== "night-mode") ? "#fff":"#dadada",
             options.title.text = 'Sia version';
             options.series = [{
                 name: 'Active Hosts',
@@ -88,13 +88,13 @@ export default {
             }, 0);
 
             var coptions = _.cloneDeep(this.pieConfig);
-            coptions.chart.backgroundColor = (this.appMode === "") ? "#fff":"#252525",
-            coptions.plotOptions.pie.borderColor = (this.appMode === "") ? "#fff":"#dadada",
+            coptions.chart.backgroundColor = (this.appMode !== "night-mode") ? "#fff":"#252525",
+            coptions.plotOptions.pie.borderColor = (this.appMode !== "night-mode") ? "#fff":"#dadada",
             coptions.title.text = 'Countries by active hosts';
 
             coptions.plotOptions.pie.dataLabels = {
                 enabled: true,
-                color: (this.appMode === "") ? "#000":"#dadada",
+                color: (this.appMode !== "night-mode") ? "#000":"#dadada",
                 borderWidth: 0,
                 style: {textOutline: '0'}
             };
@@ -124,8 +124,8 @@ export default {
             }, 0);
 
             var options = _.cloneDeep(this.pieConfig);
-            options.chart.backgroundColor = (this.appMode === "") ? "#fff":"#252525",
-            options.plotOptions.pie.borderColor = (this.appMode === "") ? "#fff":"#dadada",
+            options.chart.backgroundColor = (this.appMode !== "night-mode") ? "#fff":"#252525",
+            options.plotOptions.pie.borderColor = (this.appMode !== "night-mode") ? "#fff":"#dadada",
             options.title.text = 'Continents by active hosts';
             options.series = [{
                 name: 'Active Hosts',
@@ -149,7 +149,7 @@ export default {
             if(typeof this.network !== "object") return false;
 
             var options = _.cloneDeep(this.stockConfig);
-            options.chart.backgroundColor = (this.appMode === "") ? "#fff":"#252525",
+            options.chart.backgroundColor = (this.appMode !== "night-mode") ? "#fff":"#252525",
             options.title = {text: "Network hosts"};
             options.rangeSelector = {
                 buttonTheme: { // styles for the buttons
@@ -158,14 +158,14 @@ export default {
                     'stroke-width': 0,
                     r: 8,
                     style: {
-                        color: (this.appMode === "") ? "#039":"#dadada",
+                        color: (this.appMode !== "night-mode") ? "#039":"#dadada",
                         fontWeight: 'bold'
                     },
                     states: {
                         hover: {
                         },
                         select: {
-                            fill: (this.appMode === "") ? "#039":"#dadada",
+                            fill: (this.appMode !== "night-mode") ? "#039":"#dadada",
                             style: {
                                 color: 'white'
                             }
@@ -177,7 +177,7 @@ export default {
                 inputBoxWidth: 120,
                 inputBoxHeight: 18,
                 inputStyle: {
-                    color: (this.appMode === "") ? "#039":"#dadada",
+                    color: (this.appMode !== "night-mode") ? "#039":"#dadada",
                     fontWeight: 'bold'
                 },
                 labelStyle: {
@@ -242,7 +242,7 @@ export default {
             if(typeof this.network !== "object") return false;
 
             var options = _.cloneDeep(this.stockConfig);
-            options.chart.backgroundColor = (this.appMode === "") ? "#fff":"#252525",
+            options.chart.backgroundColor = (this.appMode !== "night-mode") ? "#fff":"#252525",
             options.title = {text: "Network storage"};
             options.rangeSelector = {
                 buttonTheme: { // styles for the buttons
@@ -251,14 +251,14 @@ export default {
                     'stroke-width': 0,
                     r: 8,
                     style: {
-                        color: (this.appMode === "") ? "#039":"#dadada",
+                        color: (this.appMode !== "night-mode") ? "#039":"#dadada",
                         fontWeight: 'bold'
                     },
                     states: {
                         hover: {
                         },
                         select: {
-                            fill: (this.appMode === "") ? "#039":"#dadada",
+                            fill: (this.appMode !== "night-mode") ? "#039":"#dadada",
                             style: {
                                 color: 'white'
                             }
@@ -270,7 +270,7 @@ export default {
                 inputBoxWidth: 120,
                 inputBoxHeight: 18,
                 inputStyle: {
-                    color: (this.appMode === "") ? "#039":"#dadada",
+                    color: (this.appMode !== "night-mode") ? "#039":"#dadada",
                     fontWeight: 'bold'
                 },
                 labelStyle: {
@@ -335,7 +335,7 @@ export default {
             if(typeof this.network !== "object") return false;
 
             var options = _.cloneDeep(this.stockConfig);
-            options.chart.backgroundColor = (this.appMode === "") ? "#fff":"#252525",
+            options.chart.backgroundColor = (this.appMode !== "night-mode") ? "#fff":"#252525",
             options.rangeSelector = {
                 buttonTheme: { // styles for the buttons
                     fill: 'none',
@@ -343,14 +343,14 @@ export default {
                     'stroke-width': 0,
                     r: 8,
                     style: {
-                        color: (this.appMode === "") ? "#039":"#dadada",
+                        color: (this.appMode !== "night-mode") ? "#039":"#dadada",
                         fontWeight: 'bold'
                     },
                     states: {
                         hover: {
                         },
                         select: {
-                            fill: (this.appMode === "") ? "#039":"#dadada",
+                            fill: (this.appMode !== "night-mode") ? "#039":"#dadada",
                             style: {
                                 color: 'white'
                             }
@@ -362,7 +362,7 @@ export default {
                 inputBoxWidth: 120,
                 inputBoxHeight: 18,
                 inputStyle: {
-                    color: (this.appMode === "") ? "#039":"#dadada",
+                    color: (this.appMode !== "night-mode") ? "#039":"#dadada",
                     fontWeight: 'bold'
                 },
                 labelStyle: {

@@ -67,7 +67,7 @@ export default {
             var options = {
                 chart: {
                     type: "area",
-                    backgroundColor: (this.appMode === "") ? "#fff":"#252525",
+                    backgroundColor: (this.appMode !== "night-mode") ? "#fff":"#252525",
                 },
                 rangeSelector: {
                     buttonTheme: { // styles for the buttons
@@ -76,14 +76,14 @@ export default {
                         'stroke-width': 0,
                         r: 8,
                         style: {
-                            color: (this.appMode === "") ? "#039":"#dadada",
+                            color: (this.appMode !== "night-mode") ? "#039":"#dadada",
                             fontWeight: 'bold'
                         },
                         states: {
                             hover: {
                             },
                             select: {
-                                fill: (this.appMode === "") ? "#039":"#dadada",
+                                fill: (this.appMode !== "night-mode") ? "#039":"#dadada",
                                 style: {
                                     color: 'white'
                                 }
@@ -95,7 +95,7 @@ export default {
                     inputBoxWidth: 120,
                     inputBoxHeight: 18,
                     inputStyle: {
-                        color: (this.appMode === "") ? "#039":"#dadada",
+                        color: (this.appMode !== "night-mode") ? "#039":"#dadada",
                         fontWeight: 'bold'
                     },
                     labelStyle: {
@@ -148,11 +148,11 @@ export default {
                     }),
                     tooltip: { valueSuffix: ' GB' },
                      yAxis: 0,
-                     color: (this.appMode === "") ? "#0000ff":"#3cb6f1",
+                     color: (this.appMode !== "night-mode") ? "#0000ff":"#3cb6f1",
                      fillColor: {
                         stops: [
-                            [0, Highcharts.Color((this.appMode === "") ? "#0000ff":"#3cb6f1").setOpacity(0.3).get('rgba')],
-                            [1, Highcharts.Color((this.appMode === "") ? "#0000ff":"#3cb6f1").setOpacity(0).get('rgba')]
+                            [0, Highcharts.Color((this.appMode !== "night-mode") ? "#0000ff":"#3cb6f1").setOpacity(0.3).get('rgba')],
+                            [1, Highcharts.Color((this.appMode !== "night-mode") ? "#0000ff":"#3cb6f1").setOpacity(0).get('rgba')]
                         ]
                     },
                     tooltip: { pointFormat: '<span style="color:blue">{series.name}: <b>{point.y:.2f} GB</b></span><br/>' },
@@ -355,7 +355,7 @@ export default {
 
                              return score*Big(val).toFixed(16);
                          }, 1);
-                        return Big(score).toFixed(16);
+                        return Big(score).toFixed(16)+' - Rank #'+entry.rank;
                     }
                 }
             }
