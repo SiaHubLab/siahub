@@ -33,3 +33,13 @@ window.versionCompare = function(left, right) {
 
     return 0;
 }
+
+window.getMedian = function(args) {
+    if (!args.length) {
+        return 0
+    };
+    var numbers = args.slice(0).sort((a, b) => a - b);
+    var middle = Math.floor(numbers.length / 2);
+    var isEven = numbers.length % 2 === 0;
+    return isEven ? (numbers[middle] + numbers[middle - 1]) / 2 : numbers[middle];
+}

@@ -209,18 +209,42 @@ export default {
                     for(var i in this.hostData){
                         if(i === "history") continue;
 
-                        this.$set(this.allFields, i, {
-                            type: 'text',
-                            name: i,
-                            key: i,
-                            formatter: (i == 'score') ? function(str, entry){
+                        var formatter = false;
+
+                        if(i == 'score') {
+                            formatter = function(str, entry){
                                 var scores = JSON.parse(entry.score);
                                 var resp = "";
                                 for(var z in scores){
                                     resp += "<p>"+z+": "+scores[z]+"</p>"
                                 }
                                 return resp;
-                            }:false
+                            };
+                        }
+
+                        if(i == 'contractprice' || i == 'maxcollateral') {
+                            formatter = function(str, entry){
+                                return (Math.round(parseInt(str)/1e24)) + ' SC';
+                            };
+                        }
+
+                        if(i == 'storageprice' || i == 'collateral') {
+                            formatter = function(str, entry){
+                                return (Math.round(parseInt(str)/1e12*4320)) + ' SC'
+                            };
+                        }
+
+                        if(i == 'downloadbandwidthprice' || i == 'uploadbandwidthprice') {
+                            formatter = function(str, entry){
+                                return (Math.round(parseInt(str)/1e12)) + ' SC'
+                            };
+                        }
+
+                        this.$set(this.allFields, i, {
+                            type: 'text',
+                            name: i,
+                            key: i,
+                            formatter: formatter
                         });
                     }
                 })
@@ -297,7 +321,7 @@ export default {
                             var uptime = entry.historicuptime/1000000;
                             var rate = 100;
                             if(parseInt(entry.historicdowntime) > 0) {
-                                rate = (entry.historicuptime/entry.historicdowntime*100).toFixed(2);
+                                rate = 100-(entry.historicdowntime/entry.historicuptime*100).toFixed(2);
                             }
                             var time = (+new Date())-uptime;
                             return window.moment(time).toNow(true)+' - '+rate+'%'+'<br>*Uptime/downtime data collected locally by SiaHub wallet and may not provide exact information.';
@@ -326,7 +350,11 @@ export default {
                     key: 'score',
                     formatter: function(str, entry){
                         var scores = JSON.parse(entry.score);
-                        var score = _.reduce(scores, function(score, val){ return score*Big(val).toFixed(16); }, 1);
+                        var score = _.reduce(scores, function(score, val, key){
+                             if(key === 'score') return score;
+
+                             return score*Big(val).toFixed(16);
+                         }, 1);
                         return Big(score).toFixed(16);
                     }
                 }

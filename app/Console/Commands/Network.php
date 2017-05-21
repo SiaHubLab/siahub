@@ -66,7 +66,7 @@ class Network extends Command
             echo "gb weight median: ".$prices__->median().PHP_EOL;
             echo "gb weight avg: ".($price/($totalstorage/1000/1000/1000)).PHP_EOL;
             echo "storage gb: ".($totalstorage/1000/1000/1000).PHP_EOL;
-            $avg_price = $price/($totalstorage/1000/1000/1000);
+            $avg_price = $hosts->median('storageprice')/1e12*4320;
             $min_price = $hosts->min('storageprice')/1e12*4320;
             $max_price = $hosts->max('storageprice')/1e12*4320;
 

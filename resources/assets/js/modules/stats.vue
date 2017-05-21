@@ -1,7 +1,7 @@
 <template>
 <ul class="nav navbar-nav navbar-right">
     <li><router-link to="/network" v-tooltip:bottom="'Storage Utilization'"><span v-html="utilization()"></span></router-link></li>
-    <li><router-link to="/network" v-tooltip:bottom="'$/TB/month Avg/Min/Max'">Price: {{averagePrice()}}/{{minPrice()}}/{{maxPrice()}} $</router-link></li>
+    <li><router-link to="/network" v-tooltip:bottom="'$/TB/month median price'">Avg Price: ${{averagePrice()}}/{{scPrice()}} SC</router-link></li>
     <li><router-link to="/network" v-tooltip:bottom="'CoinMarketCap Price'">{{ticker.price_btc}} BTC / {{ticker.price_usd}}$</router-link></li>
 </ul>
 </template>
@@ -70,11 +70,19 @@ export default {
         },
         averagePrice: function(raw){
             if(!this.hosts) return 'loading';
-            var result = this.hosts.reduce(function(a, b){
-                        return a + (Math.round(b.storageprice/1e12*4320)*(parseInt(b.totalstorage)/1000/1000/1000));
+            var result = this.hosts.map(function(b){
+                        return (Math.round(parseInt(b.storageprice)/1e12*4320));
                     }, 0);
 
-            return (result/(this.totalStorage(true)/1000/1000/1000)*this.ticker.price_usd).toFixed(2);
+            return (getMedian(result)*this.ticker.price_usd).toFixed(2);
+        },
+        scPrice: function(raw){
+            if(!this.hosts) return 'loading';
+            var result = this.hosts.map(function(b){
+                        return (Math.round(parseInt(b.storageprice)/1e12*4320));
+                    }, 0);
+
+            return getMedian(result);
         },
         minPrice: function(raw){
             if(!this.hosts) return 'loading';
