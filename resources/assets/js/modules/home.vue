@@ -46,8 +46,10 @@ export default {
         updateHosts(hosts) {
           this.$store.dispatch('updateHosts', hosts);
         },
-        updateSearch(hosts) {
-          this.$store.dispatch('updateHomeSearch', hosts);
+        updateSearch(searchString) {
+            if(searchString !== null) {
+                this.$store.dispatch('updateHomeSearch', searchString);
+            }
         },
         refresh(){
             if(this.loading) return false;
