@@ -6,6 +6,7 @@ use App\Models\Host;
 use App\Models\NetworkHistory;
 use Illuminate\Support\Facades\Cache;
 use GeoIp2\Database\Reader;
+use Illuminate\Http\Request;
 
 class HostsController extends Controller
 {
@@ -33,25 +34,37 @@ class HostsController extends Controller
         return Cache::get($cache_key);
     }
 
-    public function host($id)
+    public function host($id, Request $request)
     {
         if (is_numeric($id)) {
-            $host = Host::with('history')->find($id);
+            $host = Host::with(['history' => function ($query) use ($request) {
+                // if (!empty($request->input('xmin')) && !empty($request->input('xmax'))) {
+                //     return $query->whereBetween('created_at', [\Carbon\Carbon::createFromTimestamp($request->input('xmin')), new \Carbon\Carbon::createFromTimestamp($request->input('xmax'))]);
+                // }
+                return $query;
+            }])->find($id);
         } else {
             $host = Host::with('history')->where('key', $id)->first();
         }
         return $host;
     }
 
-    public function map()
+    public function map(Request $request)
     {
         $cache_key = "map_active";
+        if (!empty($request->input('id'))) {
+            $cache_key = "map_point".$request->input('id');
+        }
 
         if (!Cache::has($cache_key)) {
             $reader = new Reader('/usr/share/GeoIP/GeoLite2-City.mmdb');
 
             $points = [];
             $hosts = Host::where('active', 1);
+            if (!empty($request->input('id'))) {
+                $hosts = Host::where('id', $request->input('id'));
+            }
+
             foreach ($hosts->get() as $host) {
                 try {
                     $info = $reader->city($host->host);

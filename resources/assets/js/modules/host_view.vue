@@ -30,8 +30,11 @@
     </div>
     <br />
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <viewer :fields="allFields" :data="hostData"></viewer>
+        </div>
+        <div class="col-md-6">
+            <mapPoint :host="hostData.id"></mapPoint>
         </div>
     </div>
     <br />
@@ -63,6 +66,7 @@ export default {
         },
         chartData(){
             if(typeof this.hostData.history !== "object") return false;
+            var that = this;
 
             var options = {
                 chart: {
@@ -111,13 +115,13 @@ export default {
                         { type : 'all', count : 1, text : 'All' }
                     ], selected : 1,
                 },
-                scrollbar: { enabled: false },
+                scrollbar: { liveRedraw: false, enabled: false },
                 credits: { enabled: false },
                 tooltip: {
                     xDateFormat: "%Y-%m-%d %H:%M UTC"
                 },
                 xAxis: {
-                     type: 'datetime',
+                    type: 'datetime'
                 },
                 yAxis: [{
                     title: {text: 'Storage'},

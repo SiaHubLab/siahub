@@ -1,12 +1,8 @@
 <template>
 <div>
     <div class="row">
-        <div class="col-md-12" style="padding:0px; margin-top: -20px;">
-            <div id="floating-panel">
-                <button class="btn btn-info btn-sm" @click.prevent="toggleMarkers()">Toggle markers</button>
-                <button class="btn btn-success btn-sm" @click.prevent="toggleHeatmap()">Toggle heatmap</button>
-            </div>
-            <div class="map" style="width: 100%; height: 90vh;"></div>
+        <div class="col-md-12" style="padding:0px;">
+            <div class="map" style="width: 100%; height: 500px;"></div>
         </div>
     </div>
 </div>
@@ -21,6 +17,9 @@ export default {
     watch: {
         appMode: function(){
             this.mapInit();
+        },
+        host: function(){
+            this.refresh();
         }
     },
     computed: {
@@ -29,14 +28,14 @@ export default {
         },
     },
     methods: {
-        toggleMarkers(){
-            this.showMarkers = !this.showMarkers;
-            this.clearMap();
-            this.addMarkers();
-        },
-        toggleHeatmap(){
-            this.heatmap.setMap(this.heatmap.getMap() ? null : this.map);
-        },
+        // toggleMarkers(){
+        //     this.showMarkers = !this.showMarkers;
+        //     this.clearMap();
+        //     this.addMarkers();
+        // },
+        // toggleHeatmap(){
+        //     this.heatmap.setMap(this.heatmap.getMap() ? null : this.map);
+        // },
         clearMap(){
             if (typeof this.markerCluster.clearMarkers === "function") {
                 this.markerCluster.clearMarkers();
@@ -49,7 +48,7 @@ export default {
             var points = this.getPoints();
 
             var image = {
-                url: 'img/marker.png',
+                url: '/img/marker.png',
                 size: new google.maps.Size(30, 30),
                 origin: new google.maps.Point(0, 0),
                 anchor: new google.maps.Point(30, 30)
@@ -64,6 +63,9 @@ export default {
                     icon: image,
                     title: point.host.host
                 });
+
+                var latLng = marker.getPosition(); // returns LatLng object
+                this.map.setCenter(latLng); // setCenter takes a LatLng object
 
                 this.markers.push(marker);
 
@@ -192,26 +194,26 @@ export default {
             this.map = new google.maps.Map(that.$el.querySelector('.map'), myOptions);
             this.addMarkers();
 
-            this.heatmap = new google.maps.visualization.HeatmapLayer({
-                data: this.getPoints().map(function(host){ return host.latlng; }),
-                map: this.map
-            });
-            this.heatmap.set('radius', this.heatmap.get('radius') ? null : 20);
+            // this.heatmap = new google.maps.visualization.HeatmapLayer({
+            //     data: this.getPoints().map(function(host){ return host.latlng; }),
+            //     map: this.map
+            // });
+            // this.heatmap.set('radius', this.heatmap.get('radius') ? null : 20);
         },
         getPoints(){
             return this.hosts.map(function(host) {
                 return {
-                    latlng: new google.maps.LatLng(host.lat + (Math.random() -.5) / 150, host.lng + (Math.random() -.5) / 150),
+                    latlng: new google.maps.LatLng(host.lat, host.lng),
                     host: host.host
                 }
             })
         },
         refresh(){
-            if(this.loading) return false;
-
+            if(this.loading || parseInt(this.host) === NaN) return false;
+            console.log(parseInt(this.host), this.host);
             this.error = false;
             this.loading = true;
-            axios.get('/api/map')
+            axios.get('/api/map/?id='+this.host)
                 .then((response) => {
                     this.hosts = response.data;
                     this.loading = false;
@@ -224,11 +226,12 @@ export default {
                 });
         },
     },
+    props: ['host'],
     data() {
         return {
             loading: false,
             error: false,
-            hosts: [],
+            error: false,
             markers: [],
             map: false,
             heatmap: false,
