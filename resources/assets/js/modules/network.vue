@@ -179,19 +179,19 @@ export default {
 
                 if(moment(moment.utc(time)).isSameOrBefore(dayAgo)){
                     this.prevHosts24 = entry.active_hosts;
-                    this.prevStorage24 = parseInt(entry.totalstorage)/1000/1000/1000;
-                    this.prevUtilization24 = (parseInt(entry.totalstorage)-parseInt(entry.remainingstorage))/1000/1000/1000;
+                    this.prevStorage24 = parseInt(entry.totalstorage)/1000/1000/1000/1000;
+                    this.prevUtilization24 = (parseInt(entry.totalstorage)-parseInt(entry.remainingstorage))/1000/1000/1000/1000;
                 }
 
                 if(moment(moment.utc(time)).isSameOrBefore(weekAgo)){
                     this.prevHosts7d = entry.active_hosts;
-                    this.prevStorage7d = parseInt(entry.totalstorage)/1000/1000/1000;
-                    this.prevUtilization7d = (parseInt(entry.totalstorage)-parseInt(entry.remainingstorage))/1000/1000/1000;
+                    this.prevStorage7d = parseInt(entry.totalstorage)/1000/1000/1000/1000;
+                    this.prevUtilization7d = (parseInt(entry.totalstorage)-parseInt(entry.remainingstorage))/1000/1000/1000/1000;
                 }
 
                 this.curHosts = entry.active_hosts;
-                this.curStorage = parseInt(entry.totalstorage)/1000/1000/1000;
-                this.curUtilization = (parseInt(entry.totalstorage)-parseInt(entry.remainingstorage))/1000/1000/1000;
+                this.curStorage = parseInt(entry.totalstorage)/1000/1000/1000/1000;
+                this.curUtilization = (parseInt(entry.totalstorage)-parseInt(entry.remainingstorage))/1000/1000/1000/1000;
             });
         }
     },
