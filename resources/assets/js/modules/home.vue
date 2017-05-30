@@ -32,6 +32,8 @@ export default {
     mounted() {
         this.refresh();
         this.searchQuery = this.homeSearch;
+
+        setInterval(this.refresh, 60000*5);
     },
     watch: {
         mode: function() {

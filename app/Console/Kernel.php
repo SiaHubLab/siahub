@@ -25,9 +25,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('hosts:fetch 0')->everyTenMinutes()->withoutOverlapping();
+        $schedule->command('hosts:fetch 0')->hourly()->withoutOverlapping();
         $schedule->command('hosts:fetch 1')->everyMinute()->withoutOverlapping();
-        $schedule->command('network')->everyTenMinutes()->withoutOverlapping();
+        $schedule->command('network')->hourly()->withoutOverlapping();
     }
 
     /**

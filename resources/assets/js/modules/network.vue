@@ -1,6 +1,112 @@
 <template>
 <div>
     <div class="row">
+        <div v-if="hostsChange24hr" class="col-md-2">
+            <div :class="'panel '+((hostsChange24hr >= 0) ? 'panel-success':'panel-danger')">
+              <div class="panel-heading">
+                <h3 class="panel-title" title="Active hosts">Hosts 24h</h3>
+              </div>
+              <div class="panel-body">
+                  <h3 :class="'text-center '+((hostsChange24hr >= 0) ? 'network-change-success':'network-change-danger')">
+                      <span v-if="hostsChange24hr >= 0">
+                          +{{hostsChange24hr}} <i class="glyphicon glyphicon-chevron-up"></i>
+                      </span>
+                      <span v-else>
+                          {{hostsChange24hr}} <i class="glyphicon glyphicon-chevron-down"></i>
+                      </span>
+                  </h3>
+              </div>
+            </div>
+        </div>
+        <div v-if="hostsChange7d" class="col-md-2">
+            <div :class="'panel '+((hostsChange7d >= 0) ? 'panel-success':'panel-danger')">
+              <div class="panel-heading">
+                <h3 class="panel-title" title="Active hosts">Hosts 7d</h3>
+              </div>
+              <div class="panel-body">
+                  <h3 :class="'text-center '+((hostsChange7d >= 0) ? 'network-change-success':'network-change-danger')">
+                      <span v-if="hostsChange7d >= 0">
+                          +{{hostsChange7d}} <i class="glyphicon glyphicon-chevron-up"></i>
+                      </span>
+                      <span v-else>
+                          {{hostsChange7d}} <i class="glyphicon glyphicon-chevron-down"></i>
+                      </span>
+                  </h3>
+              </div>
+            </div>
+        </div>
+        <div v-if="storageChange24hr" class="col-md-2">
+            <div :class="'panel '+((storageChange24hr >= 0) ? 'panel-success':'panel-danger')">
+              <div class="panel-heading">
+                <h3 class="panel-title">Storage 24h</h3>
+              </div>
+              <div class="panel-body">
+                  <h3 :class="'text-center '+((storageChange24hr >= 0) ? 'network-change-success':'network-change-danger')">
+                      <span v-if="storageChange24hr >= 0">
+                          +{{storageChange24hr}} TB <i class="glyphicon glyphicon-chevron-up"></i>
+                      </span>
+                      <span v-else>
+                          {{storageChange24hr}} TB <i class="glyphicon glyphicon-chevron-down"></i>
+                      </span>
+                  </h3>
+              </div>
+            </div>
+        </div>
+        <div v-if="storageChange7d" class="col-md-2">
+            <div :class="'panel '+((storageChange7d >= 0) ? 'panel-success':'panel-danger')">
+              <div class="panel-heading">
+                <h3 class="panel-title">Storage 7d</h3>
+              </div>
+              <div class="panel-body">
+                  <h3 :class="'text-center '+((storageChange7d >= 0) ? 'network-change-success':'network-change-danger')">
+                      <span v-if="storageChange7d >= 0">
+                          +{{storageChange7d}} TB <i class="glyphicon glyphicon-chevron-up"></i>
+                      </span>
+                      <span v-else>
+                          {{storageChange7d}} TB <i class="glyphicon glyphicon-chevron-down"></i>
+                      </span>
+                  </h3>
+              </div>
+            </div>
+        </div>
+
+        <div v-if="utilizationChange24hr" class="col-md-2">
+            <div :class="'panel '+((utilizationChange24hr >= 0) ? 'panel-success':'panel-danger')">
+              <div class="panel-heading">
+                <h3 class="panel-title">Utilization 24h</h3>
+              </div>
+              <div class="panel-body">
+                  <h3 :class="'text-center '+((utilizationChange24hr >= 0) ? 'network-change-success':'network-change-danger')">
+                      <span v-if="utilizationChange24hr >= 0">
+                          +{{utilizationChange24hr}} TB <i class="glyphicon glyphicon-chevron-up"></i>
+                      </span>
+                      <span v-else>
+                          {{utilizationChange24hr}} TB <i class="glyphicon glyphicon-chevron-down"></i>
+                      </span>
+                  </h3>
+              </div>
+            </div>
+        </div>
+
+        <div v-if="utilizationChange7d" class="col-md-2">
+            <div :class="'panel '+((utilizationChange7d >= 0) ? 'panel-success':'panel-danger')">
+              <div class="panel-heading">
+                <h3 class="panel-title">Utilization 7d</h3>
+              </div>
+              <div class="panel-body">
+                  <h3 :class="'text-center '+((utilizationChange7d >= 0) ? 'network-change-success':'network-change-danger')">
+                      <span v-if="utilizationChange7d >= 0">
+                          +{{utilizationChange7d}} TB <i class="glyphicon glyphicon-chevron-up"></i>
+                      </span>
+                      <span v-else>
+                          {{utilizationChange7d}} TB <i class="glyphicon glyphicon-chevron-down"></i>
+                      </span>
+                  </h3>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div v-if="versionsData" class="col-md-3">
               <highcharts :options="versionsData" ref="highcharts"></highcharts>
         </div>
@@ -51,6 +157,43 @@ export default {
         });
 
         this.refresh();
+    },
+    watch: {
+        network(){
+            this.storage = [];
+            this.used = [];
+            this.activeHosts = [];
+            this.allHosts = [];
+            this.prices = [];
+
+            var dayAgo = moment().subtract(1, 'day');
+            var weekAgo = moment().subtract(7, 'day');
+
+            _.forEach(this.network, (entry) => {
+                var time = parseInt(moment.utc(entry.created_at).format('x'));
+                this.activeHosts.push({x: time, y: entry.active_hosts});
+                this.allHosts.push({x: time, y: entry.all_hosts});
+                this.prices.push({x: time, y: parseFloat(entry.avg_storageprice)});
+                this.storage.push({x: time, y: parseInt(entry.totalstorage)/1000/1000/1000});
+                this.used.push({x: time, y: (parseInt(entry.totalstorage)-parseInt(entry.remainingstorage))/1000/1000/1000});
+
+                if(moment(moment.utc(time)).isSameOrBefore(dayAgo)){
+                    this.prevHosts24 = entry.active_hosts;
+                    this.prevStorage24 = parseInt(entry.totalstorage)/1000/1000/1000;
+                    this.prevUtilization24 = (parseInt(entry.totalstorage)-parseInt(entry.remainingstorage))/1000/1000/1000;
+                }
+
+                if(moment(moment.utc(time)).isSameOrBefore(weekAgo)){
+                    this.prevHosts7d = entry.active_hosts;
+                    this.prevStorage7d = parseInt(entry.totalstorage)/1000/1000/1000;
+                    this.prevUtilization7d = (parseInt(entry.totalstorage)-parseInt(entry.remainingstorage))/1000/1000/1000;
+                }
+
+                this.curHosts = entry.active_hosts;
+                this.curStorage = parseInt(entry.totalstorage)/1000/1000/1000;
+                this.curUtilization = (parseInt(entry.totalstorage)-parseInt(entry.remainingstorage))/1000/1000/1000;
+            });
+        }
     },
     computed: {
         appMode(){
@@ -145,6 +288,42 @@ export default {
             return options;
         },
 
+        hostsChange24hr(){
+            if(typeof this.network !== "object") return false;
+
+            var change = this.curHosts-this.prevHosts24;
+            return change;
+        },
+        hostsChange7d(){
+            if(typeof this.network !== "object") return false;
+
+            var change = this.curHosts-this.prevHosts7d;
+            return change;
+        },
+        storageChange24hr(){
+            if(typeof this.network !== "object") return false;
+
+            var change = this.curStorage-this.prevStorage24;
+            return change.toFixed(2);
+        },
+        storageChange7d(){
+            if(typeof this.network !== "object") return false;
+
+            var change = this.curStorage-this.prevStorage7d;
+            return change.toFixed(2);
+        },
+        utilizationChange24hr(){
+            if(typeof this.network !== "object") return false;
+
+            var change = this.curUtilization-this.prevUtilization24;
+            return change.toFixed(2);
+        },
+        utilizationChange7d(){
+            if(typeof this.network !== "object") return false;
+
+            var change = this.curUtilization-this.prevUtilization7d;
+            return change.toFixed(2);
+        },
         hostsData(){
             if(typeof this.network !== "object") return false;
 
@@ -199,12 +378,7 @@ export default {
             options.series = [{
                     name: 'Active Hosts',
                     turboThreshold: 0,
-                    data: this.network.map((entry) => {
-                        return {
-                            x: parseInt(moment.utc(entry.created_at).format('x')),
-                            y: entry.active_hosts,
-                        };
-                    }),
+                    data: this.activeHosts,
                      yAxis: 0,
                      color: '#00cba0',
                      fillColor: {
@@ -218,12 +392,7 @@ export default {
                 {
                     name: 'Total Hosts',
                     turboThreshold: 0,
-                    data: this.network.map((entry) => {
-                        return {
-                            x: parseInt(moment.utc(entry.created_at).format('x')),
-                            y: entry.all_hosts,
-                        };
-                    }),
+                    data: this.allHosts,
                      yAxis: 1,
                      color: '#0069cb',
                      fillColor: {
@@ -292,12 +461,7 @@ export default {
             options.series = [{
                     name: 'Total storage',
                     turboThreshold: 0,
-                    data: this.network.map((entry) => {
-                        return {
-                            x: parseInt(moment.utc(entry.created_at).format('x')),
-                            y: parseInt(entry.totalstorage)/1000/1000/1000,
-                        };
-                    }),
+                    data: this.storage,
                      yAxis: 0,
                      color: '#0069cb',
                      fillColor: {
@@ -311,12 +475,7 @@ export default {
                 {
                     name: 'Used storage',
                     turboThreshold: 0,
-                    data: this.network.map((entry) => {
-                        return {
-                            x: parseInt(moment.utc(entry.created_at).format('x')),
-                            y: (parseInt(entry.totalstorage)-parseInt(entry.remainingstorage))/1000/1000/1000,
-                        };
-                    }),
+                    data: this.used,
                      yAxis: 1,
                      color: '#00cba0',
                      fillColor: {
@@ -383,12 +542,7 @@ export default {
                 {
                     name: 'Avg. price',
                     turboThreshold: 0,
-                    data: this.network.map((entry) => {
-                        return {
-                            x: parseInt(moment.utc(entry.created_at).format('x')),
-                            y: parseFloat(entry.avg_storageprice),
-                        };
-                    }),
+                    data: this.prices,
                      yAxis: 0,
                      color: '#00cba0',
                      fillColor: {
@@ -447,6 +601,23 @@ export default {
             countries: false,
             continents: false,
             network: false,
+            storage: false,
+            used: false,
+            activeHosts: false,
+            allHosts: false,
+            prices: false,
+
+            curHosts: 0,
+            curStorage: 0,
+            curUtilization: 0,
+
+            prevHosts24: 0,
+            prevHosts7d: 0,
+            prevStorage24: 0,
+            prevStorage7d: 0,
+            prevUtilization24: 0,
+            prevUtilization7d: 0,
+
             moment: window.moment,
 
             pieConfig: {

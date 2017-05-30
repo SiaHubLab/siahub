@@ -12,10 +12,23 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
     mounted() {
-        this.refresh()
+        this.refresh();
+
+        setInterval(this.refresh, 60000);
     },
     computed: mapGetters(['hosts']),
+    watch: {
+        ticker(){
+            this.updateTitle();
+        },
+        hosts(){
+            this.updateTitle();
+        }
+    },
     methods: {
+        updateTitle(){
+            document.title = '$'+this.averagePrice()+'/TB | '+this.ticker.price_btc;
+        },
         updateHosts(hosts) {
           this.$store.dispatch('updateHosts', hosts);
         },
