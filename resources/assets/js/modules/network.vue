@@ -208,6 +208,10 @@ export default {
             options.chart.backgroundColor = (this.appMode !== "night-mode") ? "#fff":"#252525",
             options.plotOptions.pie.borderColor = (this.appMode !== "night-mode") ? "#fff":"#dadada",
             options.title.text = 'Sia version';
+            options.title.style.color = (this.appMode !== "night-mode") ? "#000":"#fff";
+            options.legend.itemStyle.color = (this.appMode !== "night-mode") ? "#000":"#fff";
+            options.legend.itemHoverStyle.color = (this.appMode !== "night-mode") ? "#828282":"#dadada";
+
             options.series = [{
                 name: 'Active Hosts',
                 colorByPoint: true,
@@ -234,6 +238,9 @@ export default {
             coptions.chart.backgroundColor = (this.appMode !== "night-mode") ? "#fff":"#252525",
             coptions.plotOptions.pie.borderColor = (this.appMode !== "night-mode") ? "#fff":"#dadada",
             coptions.title.text = 'Countries by active hosts';
+            coptions.title.style.color = (this.appMode !== "night-mode") ? "#000":"#fff";
+            coptions.legend.itemStyle.color = (this.appMode !== "night-mode") ? "#000":"#fff";
+            coptions.legend.itemHoverStyle.color = (this.appMode !== "night-mode") ? "#828282":"#dadada";
 
             coptions.plotOptions.pie.dataLabels = {
                 enabled: true,
@@ -270,6 +277,9 @@ export default {
             options.chart.backgroundColor = (this.appMode !== "night-mode") ? "#fff":"#252525",
             options.plotOptions.pie.borderColor = (this.appMode !== "night-mode") ? "#fff":"#dadada",
             options.title.text = 'Continents by active hosts';
+            options.title.style.color = (this.appMode !== "night-mode") ? "#000":"#fff";
+            options.legend.itemStyle.color = (this.appMode !== "night-mode") ? "#000":"#fff";
+            options.legend.itemHoverStyle.color = (this.appMode !== "night-mode") ? "#828282":"#dadada";
             options.series = [{
                 name: 'Active Hosts',
                 colorByPoint: true,
@@ -329,7 +339,8 @@ export default {
 
             var options = _.cloneDeep(this.stockConfig);
             options.chart.backgroundColor = (this.appMode !== "night-mode") ? "#fff":"#252525",
-            options.title = {text: "Network hosts"};
+            options.title.text = "Network hosts";
+            options.title.style.color = (this.appMode !== "night-mode") ? "#000":"#fff";
             options.rangeSelector = {
                 buttonTheme: { // styles for the buttons
                     fill: 'none',
@@ -412,7 +423,8 @@ export default {
 
             var options = _.cloneDeep(this.stockConfig);
             options.chart.backgroundColor = (this.appMode !== "night-mode") ? "#fff":"#252525",
-            options.title = {text: "Network storage"};
+            options.title.text = "Network storage";
+            options.title.style.color = (this.appMode !== "night-mode") ? "#000":"#fff";
             options.rangeSelector = {
                 buttonTheme: { // styles for the buttons
                     fill: 'none',
@@ -530,7 +542,8 @@ export default {
                 }
             };
 
-            options.title = {text: "Network prices"};
+            options.title.text = "Network prices";
+            options.title.style.color = (this.appMode !== "night-mode") ? "#000":"#fff";
 
             options.yAxis = [{
                 title: {text: 'Avg. price'},
@@ -629,7 +642,8 @@ export default {
                 },
                 credits: { enabled: false },
                 title: {
-                    text: 'Pie title'
+                    text: 'Pie title',
+                    style: {color: '#000'}
                 },
                 tooltip: {
                     pointFormat: '{series.name}: <b>{point.percentage:.1f}% ({point.y})</b>'
@@ -644,10 +658,18 @@ export default {
                         showInLegend: true
                     }
                 },
+                legend: {
+                    itemStyle: {color: "#000"},
+                    itemHoverStyle: {color: "#828282"}
+                },
                 series: {}
             },
 
             stockConfig: {
+                title: {
+                    text: 'Stock title',
+                    style: {color: '#000'}
+                },
                 legend: {
                     enabled: false,
                     align: 'right',
