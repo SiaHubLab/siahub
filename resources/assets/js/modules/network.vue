@@ -245,6 +245,7 @@ export default {
             coptions.plotOptions.pie.dataLabels = {
                 enabled: true,
                 color: (this.appMode !== "night-mode") ? "#000":"#dadada",
+                connectorColor: (this.appMode !== "night-mode") ? "#000":"#dadada",
                 borderWidth: 0,
                 style: {textOutline: '0'}
             };
@@ -653,7 +654,8 @@ export default {
                         allowPointSelect: true,
                         cursor: 'pointer',
                         dataLabels: {
-                            enabled: false
+                            enabled: false,
+                            connectorColor: '#fff'
                         },
                         showInLegend: true
                     }
