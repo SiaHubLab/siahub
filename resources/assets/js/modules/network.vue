@@ -405,7 +405,7 @@ export default {
                     name: 'Total Hosts',
                     turboThreshold: 0,
                     data: this.allHosts,
-                     yAxis: 1,
+                     yAxis: 0,
                      color: '#0069cb',
                      fillColor: {
                         stops: [

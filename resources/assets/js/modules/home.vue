@@ -143,7 +143,7 @@ export default {
                     try {
                         var scores = JSON.parse(entry.score);
                         var score = _.reduce(scores, function(score, val, key){
-                            if(key === 'score') return score;
+                            if(key === 'score' || key === 'conversionrate') return score;
 
                             return score*Big(val).toFixed(scale);
                          }, 1);

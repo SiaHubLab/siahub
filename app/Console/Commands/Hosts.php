@@ -81,7 +81,7 @@ class Hosts extends Command
                     $db_host->key = $host['publickey']['key'];
                     $score = 1;
                     foreach ($host['scorebreakdown'] as $key => $val) {
-                        if ($key == "score") {
+                        if ($key == "score" || $key == "conversionrate") {
                             continue;
                         }
 

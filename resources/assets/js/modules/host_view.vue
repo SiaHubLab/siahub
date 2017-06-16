@@ -354,7 +354,7 @@ export default {
                     formatter: function(str, entry){
                         var scores = JSON.parse(entry.score);
                         var score = _.reduce(scores, function(score, val, key){
-                             if(key === 'score') return score;
+                             if(key === 'score' || key === 'conversionrate') return score;
 
                              return score*Big(val).toFixed(16);
                          }, 1);
