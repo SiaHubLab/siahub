@@ -98,12 +98,14 @@ class Hosts extends Command
 
                     $db_host->host = (filter_var($hostname, FILTER_VALIDATE_IP)) ? $hostname:gethostbyname($hostname);
                     if ($last_scan['success']) {
-                        $db_host->last_seen = strtotime(explode('.', $last_scan['timestamp'])[0].env('SIA_TIME_OFFSET'));
+                        $tz = substr($last_scan['timestamp'], -6);
+                        $db_host->last_seen = strtotime(explode('.', $last_scan['timestamp'])[0].$tz);
+
+                        dump($tz, $last_scan['timestamp']);
                     }
                     $db_host->active = $last_scan['success'];
 
                     $db_host->save();
-
                     if ((!$collect_hosts && $db_host->active) || $new) { // collect only active hosts OR add init history for new host
                         $db_host->history()->create($host);
                         echo "History added".PHP_EOL;

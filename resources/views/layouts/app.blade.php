@@ -43,6 +43,7 @@
                         <li><router-link to="/">Home</router-link></li>
                         <li><router-link to="/map">Map</router-link></li>
                         <li><router-link to="/network">Network</router-link></li>
+                        <li><a target="_blank" href="https://consensus.siahub.info/">Consensus DB</a></li>
                     </ul>
                     <stats></stats>
                     <theme></theme>
