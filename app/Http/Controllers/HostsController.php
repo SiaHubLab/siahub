@@ -28,7 +28,7 @@ class HostsController extends Controller
             if ($mode == "latest") {
                 $hosts = $hosts->orderBy('id', 'desc')->take(10);
             }
-            Cache::put($cache_key, $hosts->get(), 5);
+            Cache::put($cache_key, json_encode($hosts->get()), 5);
         }
 
         return Cache::get($cache_key);
@@ -103,7 +103,7 @@ class HostsController extends Controller
                           ->groupBy('version')
                           ->orderBy('version', 'desc')
                           ->get();
-            Cache::put($cache_key, $hosts, 5);
+            Cache::put($cache_key, json_encode($hosts), 5);
         }
 
         return Cache::get($cache_key);
@@ -119,7 +119,7 @@ class HostsController extends Controller
                           ->groupBy('country')
                           ->orderBy('hosts', 'desc')
                           ->get();
-            Cache::put($cache_key, $hosts, 5);
+            Cache::put($cache_key, json_encode($hosts), 5);
         }
 
         return Cache::get($cache_key);
@@ -135,7 +135,7 @@ class HostsController extends Controller
                           ->groupBy('continent')
                           ->orderBy('hosts', 'desc')
                           ->get();
-            Cache::put($cache_key, $hosts, 5);
+            Cache::put($cache_key, json_encode($hosts), 5);
         }
 
         return Cache::get($cache_key);
@@ -147,7 +147,7 @@ class HostsController extends Controller
 
         if (!Cache::has($cache_key)) {
             $hosts = NetworkHistory::orderBy('created_at', 'asc')->get();
-            Cache::put($cache_key, $hosts, 5);
+            Cache::put($cache_key, json_encode($hosts), 5);
         }
 
         return Cache::get($cache_key);
