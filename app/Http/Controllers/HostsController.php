@@ -63,7 +63,7 @@ class HostsController extends Controller
             $cache_key = "map_point".$request->input('id');
         }
 
-        if (!Cache::has($cache_key)) {
+        if (Cache::has($cache_key)) {
             $reader = new Reader('/usr/share/GeoIP/GeoLite2-City.mmdb');
 
             $points = [];
@@ -74,7 +74,7 @@ class HostsController extends Controller
 
             foreach ($hosts->get() as $host) {
                 try {
-                    $info = $reader->city($host->host);
+                    $info = $reader->city(str_replace(['[',']'], '', $host->host));
                     if ($info) {
                         $points[] = ['host' => $host, 'lat' => $info->location->latitude, 'lng' => $info->location->longitude];
                         if (empty($host->continent) || $host->country) {
@@ -84,6 +84,7 @@ class HostsController extends Controller
                         }
                     }
                 } catch (\Exception $e) {
+                    //var_dump($e->getMessage());
                 }
             }
             Cache::put($cache_key, $points, 5);
