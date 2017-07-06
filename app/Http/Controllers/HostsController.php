@@ -50,12 +50,10 @@ class HostsController extends Controller
                 $host = Host::with('history')->where('key', $id)->first();
             }
 
-            Cache::put($cache_key, $host, 10);
-        } else {
-            $host = Cache::get($cache_key);
-            $host['cached'] = true;
+            Cache::put($cache_key, json_encode($host), 10);
         }
-        return $host;
+
+        return Cache::get($cache_key);
     }
 
     public function map(Request $request)
