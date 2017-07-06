@@ -53,6 +53,7 @@ class HostsController extends Controller
             Cache::put($cache_key, $host, 10);
         } else {
             $host = Cache::get($cache_key);
+            $host['cached'] = true;
         }
         return $host;
     }
