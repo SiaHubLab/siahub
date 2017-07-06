@@ -327,7 +327,7 @@ export default {
                                 rate = 100-(entry.historicdowntime/entry.historicuptime*100).toFixed(2);
                             }
                             var time = (+new Date())-uptime;
-                            return window.moment(time).toNow(true)+' - '+rate+'%'+'<br>*Uptime/downtime data collected locally by SiaHub wallet and may not provide exact information.';
+                            return window.moment(time).toNow(true)+' - '+rate+'%'+'<br>*Uptime/downtime data collected locally by SiaHub wallet and may not provide exact information. <a href="https://siahub.readme.io/docs/host-uptime">Learn more</a>';
                         } else {
                             return 'not enough data collected';
                         }
@@ -358,7 +358,7 @@ export default {
 
                              return score*Big(val).toFixed(16);
                          }, 1);
-                        return Big(score).toFixed(16)+' - Rank #'+entry.rank;
+                        return Big(score).toFixed(16)+' - Rank #'+entry.rank+' <a href="https://siahub.readme.io/docs/host-scorerank">Learn more</a>';
                     }
                 }
             }

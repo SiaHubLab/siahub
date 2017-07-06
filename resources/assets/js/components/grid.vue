@@ -23,6 +23,9 @@
               </span>
             </td>
           </tr>
+          <tr v-if="!filteredData.length">
+              <td :colspan="columns.length" v-html="notFoundMessage"></td>
+          </tr>
         </tbody>
         <tfoot>
             <tr>
@@ -54,6 +57,7 @@ export default {
         filterKey: String,
         defaultSort: String,
         defaultSortOrder: String,
+        notFound: String,
     },
     data: function() {
         var sortOrders = {}
@@ -62,6 +66,7 @@ export default {
         })
         return {
             sortKey: this.defaultSort || '',
+            notFoundMessage: this.notFound || 'Nothing found :(',
             sortOrders: sortOrders,
             perpage: 10,
             page: 1
