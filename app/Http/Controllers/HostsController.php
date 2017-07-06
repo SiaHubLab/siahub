@@ -36,7 +36,7 @@ class HostsController extends Controller
 
     public function host($id, Request $request)
     {
-        $cache_key = "host_".$mode;
+        $cache_key = "host_".$id;
 
         if (!Cache::has($cache_key)) {
             if (is_numeric($id)) {
