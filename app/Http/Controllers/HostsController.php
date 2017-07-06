@@ -36,15 +36,23 @@ class HostsController extends Controller
 
     public function host($id, Request $request)
     {
-        if (is_numeric($id)) {
-            $host = Host::with(['history' => function ($query) use ($request) {
-                // if (!empty($request->input('xmin')) && !empty($request->input('xmax'))) {
-                //     return $query->whereBetween('created_at', [\Carbon\Carbon::createFromTimestamp($request->input('xmin')), new \Carbon\Carbon::createFromTimestamp($request->input('xmax'))]);
-                // }
-                return $query;
-            }])->find($id);
+        $cache_key = "host_".$mode;
+
+        if (!Cache::has($cache_key)) {
+            if (is_numeric($id)) {
+                $host = Host::with(['history' => function ($query) use ($request) {
+                    // if (!empty($request->input('xmin')) && !empty($request->input('xmax'))) {
+                    //     return $query->whereBetween('created_at', [\Carbon\Carbon::createFromTimestamp($request->input('xmin')), new \Carbon\Carbon::createFromTimestamp($request->input('xmax'))]);
+                    // }
+                    return $query;
+                }])->find($id);
+            } else {
+                $host = Host::with('history')->where('key', $id)->first();
+            }
+
+            Cache::put($cache_key, $host, 10);
         } else {
-            $host = Host::with('history')->where('key', $id)->first();
+            $host = Cache::get($cache_key);
         }
         return $host;
     }
