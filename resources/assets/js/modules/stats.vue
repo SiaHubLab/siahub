@@ -9,6 +9,7 @@
 <script>
 import { updateHosts } from '../store/actions';
 import { mapGetters, mapActions } from 'vuex'
+import _ from 'lodash'
 
 export default {
     mounted() {
@@ -41,7 +42,7 @@ export default {
                 .then((response) => {
                     this.ticker = response.data;
                     this.loading = false;
-                    this.loadHosts();
+                    _.delay(this.loadHosts, 3000);
                 })
                 .catch((error) => {
                     console.log(error);
