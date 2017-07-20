@@ -64,7 +64,7 @@ class HostsController extends Controller
         }
 
         if (!Cache::has($cache_key)) {
-            $reader = new Reader('/usr/share/GeoIP/GeoLite2-City.mmdb');
+            $reader = new Reader(env('MAXMIND_DB'));
 
             $points = [];
             $hosts = Host::where('active', 1);

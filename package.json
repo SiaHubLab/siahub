@@ -24,6 +24,7 @@
     "raven-js": "^3.14.0",
     "vue-highcharts": "0.0.9",
     "vue-quill-editor": "^2.0.0",
+    "vue-router": "^2.7.0",
     "vue-toasted": "^1.0.26",
     "vuejs-datepicker": "^0.6.5",
     "vuex": "^2.2.1"

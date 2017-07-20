@@ -21,7 +21,7 @@ class Hosts extends Command
      *
      * @var string
      */
-    protected $description = 'Fetch hosts';
+    protected $description = 'Fetch hosts from siad, argument: collect hosts(1) or history for charts(0)';
 
     /**
      * Create a new command instance.
@@ -106,7 +106,9 @@ class Hosts extends Command
                     $db_host->active = $last_scan['success'];
 
                     $db_host->save();
-                    if ((!$collect_hosts && $db_host->active) || $new) { // collect only active hosts OR add init history for new host
+
+                    // add history only for active host OR add initial history row for new host
+                    if ((!$collect_hosts && $db_host->active) || $new) {
                         $db_host->history()->create($host);
                         echo "History added".PHP_EOL;
                     }
