@@ -16,6 +16,11 @@
     <br />
     <grid notFound='Nothing found :( <a href="https://siahub.readme.io/docs/host-isnt-listed-or-outdated-info">Where is my host?</a>' v-show="!loading && !error" :defaultSort="sortKey" defaultSortOrder="-1" :data="hosts" :columns="gridColumns" :formatters="formatters" :filter-key="searchQuery">1
     </grid>
+    <div v-if="loading" class="row">
+        <div class="col-md-12">
+            <loader></loader>
+        </div>
+    </div>
 
     <div v-show="error" class="alert alert-danger">
         <p><strong>Oops!</strong> Error, {{error}}</p>

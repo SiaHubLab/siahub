@@ -21,6 +21,8 @@ Vue.directive('tooltip', function(el, binding) {
         });
 });
 
+Vue.component('loader', require('./components/loader.vue'));
+Vue.component('numberChangeSnippet', require('./components/numberChangeSnippet.vue'));
 Vue.component('grid', require('./components/grid.vue'));
 Vue.component('viewer', require('./components/viewer.vue'));
 Vue.component('stats', require('./modules/stats.vue'));

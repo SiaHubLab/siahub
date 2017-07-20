@@ -1,6 +1,11 @@
 <template>
 <div>
-    <div class="row">
+    <div v-if="loading" class="row">
+        <div class="col-md-12">
+            <loader></loader>
+        </div>
+    </div>
+    <div v-show="!loading" class="row">
         <div class="col-md-12" style="padding:0px; margin-top: -20px;">
             <div id="floating-panel">
                 <button class="btn btn-info btn-sm" @click.prevent="toggleMarkers()">Toggle markers</button>
