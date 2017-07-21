@@ -151,11 +151,11 @@ export default {
                     });
                     that.storage.push({
                         x: time,
-                        y: parseInt(entry.totalstorage) / 1000 / 1000 / 1000
+                        y: parseInt(entry.totalstorage) / 1000 / 1000 / 1000 / 1000
                     });
                     that.used.push({
                         x: time,
-                        y: (parseInt(entry.totalstorage) - parseInt(entry.remainingstorage)) / 1000 / 1000 / 1000
+                        y: (parseInt(entry.totalstorage) - parseInt(entry.remainingstorage)) / 1000 / 1000 / 1000 / 1000
                     });
 
                     if (moment(moment.utc(time)).isSameOrBefore(dayAgo)) {
@@ -555,7 +555,7 @@ export default {
                         ]
                     },
                     tooltip: {
-                        pointFormat: '<span style="color:#0069cb">{series.name}: <b>{point.y:.2f} GB</b></span><br/>'
+                        pointFormat: '<span style="color:#0069cb">{series.name}: <b>{point.y:.2f} TB</b></span><br/>'
                     },
                 },
                 {
@@ -571,7 +571,7 @@ export default {
                         ]
                     },
                     tooltip: {
-                        pointFormat: '<span style="color:#00cba0">{series.name}: <b>{point.y:.2f} GB</b></span><br/>'
+                        pointFormat: '<span style="color:#00cba0">{series.name}: <b>{point.y:.2f} TB</b></span><br/>'
                     },
                 }
             ];
