@@ -220,7 +220,7 @@ export default {
                                 var scores = JSON.parse(entry.score);
                                 var resp = "";
                                 for(var z in scores){
-                                    resp += "<p>"+z+": "+scores[z]+"</p>"
+                                    resp += "<p>"+z+": "+toFixed(scores[z])+"</p>"
                                 }
                                 return resp;
                             };
