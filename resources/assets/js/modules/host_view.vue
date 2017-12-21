@@ -10,7 +10,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <p>Wallet Version: {{hostData.version}}</p>
-                            <p v-if="walletOutdated()" class="alert alert-danger">Wallet is outdated, don't forget to upgrade your wallet to 1.3.0</p>
+                            <p v-if="walletOutdated()" class="alert alert-danger">Wallet is outdated, don't forget to upgrade your wallet to 1.3.1</p>
                             <p>Price: {{price()}}</p>
                             <p><span class="label label-info" style="font-size: 100%;">Last success check: {{moment.utc(hostData.last_seen*1000).format('DD/MM/YY HH:mm z')}}</span></p>
                         </div>
@@ -259,7 +259,7 @@ export default {
         },
         walletOutdated: function(){
             if(!this.hostData) return false;
-            return versionCompare('1.3.0', this.hostData.version) === 1;
+            return versionCompare('1.3.1', this.hostData.version) === 1;
         },
         price: function(){
             if(!this.hostData) return 'loading';
