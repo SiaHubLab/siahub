@@ -29,6 +29,7 @@ Vue.component('stats', require('./modules/stats.vue'));
 Vue.component('theme', require('./modules/theme.vue'));
 Vue.component('wallet', require('./components/wallet.vue'));
 Vue.component('mapPoint', require('./components/map.vue'));
+Vue.component('ads', require('./components/ads.vue'));
 
 Vue.use(Toasted, {
     theme: "primary",
