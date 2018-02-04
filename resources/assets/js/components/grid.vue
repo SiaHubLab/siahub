@@ -6,7 +6,8 @@
             <th v-for="key in columns"
               @click="sortBy(key)"
               :class="{ active: sortKey == key }">
-              {{ key | capitalize }}
+              <span v-if="columnsTitles[key]">{{columnsTitles[key]}}</span>
+              <span v-else>{{ key | capitalize }}</span>
               <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
               </span>
             </th>
@@ -53,6 +54,7 @@ export default {
     props: {
         data: Array,
         columns: Array,
+        columnsTitles: Object,
         formatters: Object,
         filterKey: String,
         defaultSort: String,

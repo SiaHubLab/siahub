@@ -3,14 +3,16 @@
     <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading"  v-html="used_percent()">
+                <div class="panel-heading" v-html="used_percent()">
                     #{{hostData.id}}
                 </div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-12">
+                            <p>Storage of network: {{storageOfNetwork}}</p>
+                            <p>Stored network data: {{utilizationOfNetwork}}</p>
                             <p>Wallet Version: {{hostData.version}}</p>
-                            <p v-if="walletOutdated()" class="alert alert-danger">Wallet is outdated, don't forget to upgrade your wallet to 1.3.1</p>
+                            <p v-if="walletOutdated()" class="alert alert-danger">Wallet is outdated, don't forget to <a target="_blank" :href="this.releaseData['html_url']">upgrade your wallet to {{this.releaseData['tag_name']}}</a></p>
                             <p>Price: {{price()}}</p>
                             <p><span class="label label-info" style="font-size: 100%;">Last success check: {{moment.utc(hostData.last_seen*1000).format('DD/MM/YY HH:mm z')}}</span></p>
                         </div>
@@ -47,7 +49,6 @@
 
 <script>
 import Highcharts from 'highcharts';
-import { mapGetters } from 'vuex'
 
 export default {
     mounted() {
@@ -63,6 +64,20 @@ export default {
     computed: {
         appMode(){
             return this.$store.getters.appMode;
+        },
+        hosts(){
+            return this.$store.getters.hosts;
+        },
+        storageOfNetwork: function(){
+            if(!this.hosts) return 'loading';
+            var percent = (this.hostData.totalstorage/this.totalStorage(true)*100).toFixed(2);
+            return percent+'%';
+        },
+        utilizationOfNetwork: function () {
+            if(!this.hosts) return 'loading';
+            var utilization = this.totalStorage(true)-this.totalRemainingStorage(true);
+            var percent = ((this.hostData.totalstorage-this.hostData.remainingstorage)/utilization*100).toFixed(2);
+            return percent+'%';
         },
         chartData(){
             if(typeof this.hostData.history !== "object") return false;
@@ -200,6 +215,22 @@ export default {
         }
     },
     methods: {
+        totalStorage: function(raw){
+            if(!this.hosts) return 'loading';
+            var result = this.hosts.reduce(function(a, b){
+                return a + parseInt(b.totalstorage);
+            }, 0);
+
+            return (raw) ? result:humanFileSize(result, true);
+        },
+        totalRemainingStorage: function(raw){
+            if(!this.hosts) return 'loading';
+            var result = this.hosts.reduce(function(a, b){
+                return a + parseInt(b.remainingstorage);
+            }, 0);
+
+            return (raw) ? result:humanFileSize(result, true);
+        },
         refresh(){
             if(this.loading) return false;
 
@@ -256,10 +287,16 @@ export default {
                     this.error = error.response.data;
                     this.loading = false;
                 });
+
+            axios.get('/api/sia/release').then((response) => {
+                this.releaseData = response.data;
+             });
         },
         walletOutdated: function(){
             if(!this.hostData) return false;
-            return versionCompare('1.3.1', this.hostData.version) === 1;
+            if(!this.releaseData) return false;
+
+            return versionCompare(this.releaseData['tag_name'].replace('v', ''), this.hostData.version) === 1;
         },
         price: function(){
             if(!this.hostData) return 'loading';
@@ -298,17 +335,13 @@ export default {
             error: false,
             moment: window.moment,
             hostData: {},
+            releaseData: null,
             allFields: {},
             fields: {
                 key: {
                     type: 'text',
                     name: 'Key',
                     key: 'key'
-                },
-                algorithm: {
-                    type: 'text',
-                    name: 'Algorithm',
-                    key: 'algorithm'
                 },
                 host: {
                     type: 'text',

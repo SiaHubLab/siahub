@@ -14,7 +14,7 @@
         </div>
     </div>
     <br />
-    <grid notFound='Nothing found :( <a href="https://siahub.readme.io/docs/host-isnt-listed-or-outdated-info">Where is my host?</a>' v-show="!loading && !error" :defaultSort="sortKey" defaultSortOrder="-1" :data="hosts" :columns="gridColumns" :formatters="formatters" :filter-key="searchQuery">1
+    <grid notFound='Nothing found :( <a href="https://siahub.readme.io/docs/host-isnt-listed-or-outdated-info">Where is my host?</a>' v-show="!loading && !error" :defaultSort="sortKey" defaultSortOrder="-1" :data="hosts" :columns="gridColumns" :columnsTitles="columnsTitles" :formatters="formatters" :filter-key="searchQuery">1
     </grid>
     <div v-if="loading" class="row">
         <div class="col-md-12">
@@ -137,6 +137,7 @@ export default {
             mode: 'active',
             sortKey: 'used',
             gridColumns: ['score', 'host', 'totalstorage', 'used', 'used_percent', 'price', 'actions'],
+            columnsTitles: {'totalstorage': 'Total storage', 'used': 'Used storage', 'used_percent': 'Used (%)', 'price': 'Price (SC/TB/month)'},
             formatters: {
                 actions: function(str, entry){
                     return {

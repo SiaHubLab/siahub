@@ -205,21 +205,18 @@ export default {
             }, 0);
             var options = _.cloneDeep(this.pieConfig);
             options.chart.backgroundColor = (this.appMode !== "night-mode") ? "#fff" : "#252525";
-            options.plotOptions.pie.borderColor = (this.appMode !== "night-mode") ? "#fff" : "#dadada";
+            options.plotOptions.pie.borderColor = (this.appMode !== "night-mode") ? "#fff" : "#252525";
+            options.plotOptions.pie.colors = (this.appMode !== "night-mode") ? this.pieConfig.plotOptions.pie.colors : this.pieConfig.plotOptions.pie.nightColors;
+
             options.title.text = 'Sia version';
             options.title.style.color = (this.appMode !== "night-mode") ? "#000" : "#fff";
             options.legend.itemStyle.color = (this.appMode !== "night-mode") ? "#000" : "#fff";
-            options.legend.itemHoverStyle.color = (this.appMode !== "night-mode") ? "#828282" : "#dadada";
-
+            options.legend.itemHoverStyle.color = (this.appMode !== "night-mode") ? "#828282" : "#252525";
             options.series = [{
                 name: 'Active Hosts',
                 colorByPoint: true,
                 data: this.versions.map((entry) => {
-                    var color_num = Math.round((entry.hosts / totalHosts * 100) / 100 * 255);
-                    var color = "rgba(0, " + color_num + ", " + Math.max(0, 150 - color_num) + ", 0.7)";
-
                     return {
-                        color: color,
                         name: entry.version,
                         y: entry.hosts,
                     };
@@ -235,11 +232,12 @@ export default {
 
             var coptions = _.cloneDeep(this.pieConfig);
             coptions.chart.backgroundColor = (this.appMode !== "night-mode") ? "#fff" : "#252525";
-            coptions.plotOptions.pie.borderColor = (this.appMode !== "night-mode") ? "#fff" : "#dadada";
+            coptions.plotOptions.pie.borderColor = (this.appMode !== "night-mode") ? "#fff" : "#252525";
+            coptions.plotOptions.pie.colors = (this.appMode !== "night-mode") ? this.pieConfig.plotOptions.pie.colors : this.pieConfig.plotOptions.pie.nightColors;
             coptions.title.text = 'Countries by active hosts';
             coptions.title.style.color = (this.appMode !== "night-mode") ? "#000" : "#fff";
             coptions.legend.itemStyle.color = (this.appMode !== "night-mode") ? "#000" : "#fff";
-            coptions.legend.itemHoverStyle.color = (this.appMode !== "night-mode") ? "#828282" : "#dadada";
+            coptions.legend.itemHoverStyle.color = (this.appMode !== "night-mode") ? "#828282" : "#252525";
 
             coptions.plotOptions.pie.dataLabels = {
                 enabled: true,
@@ -260,7 +258,7 @@ export default {
                     var color = "rgba(0, " + color_num + ", " + Math.max(0, 150 - color_num) + ", 0.7)";
 
                     return {
-                        color: color,
+                        // color: color,
                         name: (entry.country !== "") ? entry.country:"Unknown",
                         y: entry.hosts,
                     };
@@ -277,11 +275,13 @@ export default {
 
             var options = _.cloneDeep(this.pieConfig);
             options.chart.backgroundColor = (this.appMode !== "night-mode") ? "#fff" : "#252525";
-            options.plotOptions.pie.borderColor = (this.appMode !== "night-mode") ? "#fff" : "#dadada";
+            options.plotOptions.pie.borderColor = (this.appMode !== "night-mode") ? "#fff" : "#252525";
+            options.plotOptions.pie.colors = (this.appMode !== "night-mode") ? this.pieConfig.plotOptions.pie.colors : this.pieConfig.plotOptions.pie.nightColors;
+
             options.title.text = 'Continents by active hosts';
             options.title.style.color = (this.appMode !== "night-mode") ? "#000" : "#fff";
             options.legend.itemStyle.color = (this.appMode !== "night-mode") ? "#000" : "#fff";
-            options.legend.itemHoverStyle.color = (this.appMode !== "night-mode") ? "#828282" : "#dadada";
+            options.legend.itemHoverStyle.color = (this.appMode !== "night-mode") ? "#828282" : "#252525";
             options.series = [{
                 name: 'Active Hosts',
                 colorByPoint: true,
@@ -290,7 +290,7 @@ export default {
                     var color = "rgba(0, " + color_num + ", " + Math.max(0, 150 - color_num) + ", 0.7)";
 
                     return {
-                        color: color,
+                        // color: color,
                         name: (entry.continent !== "") ? entry.continent:"Unknown",
                         y: entry.hosts,
                     };
@@ -755,7 +755,39 @@ export default {
                             enabled: false,
                             connectorColor: '#fff'
                         },
-                        showInLegend: true
+                        showInLegend: true,
+                        colors: [
+                            "#FF7043",
+                            "#FFA726",
+                            "#FFCA28",
+                            "#FFEE58",
+                            "#D4E157",
+                            "#9CCC65",
+                            "#66BB6A",
+                            "#26A69A",
+                            "#26C6DA",
+                            "#42A5F5",
+                            "#5C6BC0",
+                            "#7E57C2",
+                            "#AB47BC",
+                            "#E91E63",
+                            "#f44336",
+                        ],
+
+                        nightColors: [
+                            "#3F51B5",
+                            "#3949AB",
+                            "#303F9F",
+                            "#283593",
+                            "#0D47A1",
+                            "#1565C0",
+                            "#1976D2",
+                            "#1E88E5",
+                            "#039BE5",
+                            "#0288D1",
+                            "#0277BD",
+                            "#01579B",
+                        ],
                     }
                 },
                 legend: {

@@ -26,7 +26,7 @@ Route::get('/countries', "HostsController@countries");
 Route::get('/continents', "HostsController@continents");
 Route::get('/network', "HostsController@network");
 Route::get('/host/{id}', "HostsController@host");
-Route::get('/sia_ticker', function () {
+Route::get('/sia/ticker', function () {
     if (Cache::has('cmcticker')) {
         return Cache::get('cmcticker');
     } else {
@@ -36,4 +36,18 @@ Route::get('/sia_ticker', function () {
 
         return $cmc[0];
     }
+});
+
+Route::get('/sia/release', function () {
+    if (!Cache::has('siarelease')) {
+        try {
+            $client = new \GuzzleHttp\Client();
+            $res = $client->request('GET', 'https://api.github.com/repos/NebulousLabs/Sia/releases/latest');
+            $response = json_decode($res->getBody(), true);
+            Cache::put('siarelease', $response, 24*60);
+        } catch(Exception $e) {
+        }
+    }
+
+    return Cache::get('siarelease');
 });

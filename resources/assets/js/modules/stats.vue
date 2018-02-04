@@ -8,7 +8,7 @@
 
 <script>
 import { updateHosts } from '../store/actions';
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 import _ from 'lodash'
 
 export default {
@@ -38,7 +38,7 @@ export default {
 
             this.error = false;
             this.loading = true;
-            axios.get('/api/sia_ticker')
+            axios.get('/api/sia/ticker')
                 .then((response) => {
                     this.ticker = response.data;
                     this.loading = false;
