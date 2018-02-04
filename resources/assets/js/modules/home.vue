@@ -136,7 +136,7 @@ export default {
             searchQuery: this.homeSearch,
             mode: 'active',
             sortKey: 'used',
-            gridColumns: ['score', 'host', 'totalstorage', 'used', 'used_percent', 'price', 'actions'],
+            gridColumns: ['score', 'host', 'total storage', 'used', 'used (%)', 'price ($/TB/month)', 'actions'],
             formatters: {
                 actions: function(str, entry){
                     return {
