@@ -9,8 +9,8 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <p>Storage of network: {{storageOfNetwork}}</p>
-                            <p>Stored network data: {{utilizationOfNetwork}}</p>
+                            <p>Provides {{storageOfNetwork}}% of total network storage</p>
+                            <p>Holds {{utilizationOfNetwork}}% of data stored on network</p>
                             <p>Wallet Version: {{hostData.version}}</p>
                             <p v-if="walletOutdated()" class="alert alert-danger">Wallet is outdated, don't forget to <a target="_blank" :href="this.releaseData['html_url']">upgrade your wallet to {{this.releaseData['tag_name']}}</a></p>
                             <p>Price: {{price()}}</p>
@@ -71,13 +71,13 @@ export default {
         storageOfNetwork: function(){
             if(!this.hosts) return 'loading';
             var percent = (this.hostData.totalstorage/this.totalStorage(true)*100).toFixed(2);
-            return percent+'%';
+            return percent;
         },
         utilizationOfNetwork: function () {
             if(!this.hosts) return 'loading';
             var utilization = this.totalStorage(true)-this.totalRemainingStorage(true);
             var percent = ((this.hostData.totalstorage-this.hostData.remainingstorage)/utilization*100).toFixed(2);
-            return percent+'%';
+            return percent;
         },
         chartData(){
             if(typeof this.hostData.history !== "object") return false;
