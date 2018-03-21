@@ -40,7 +40,7 @@ class Network extends Command
     public function handle()
     {
         try {
-            $hosts = Host::where('active', 1)->get();
+            $hosts = Host::select(['totalstorage', 'remainingstorage', 'storageprice'])->where('active', 1)->get();
 
             $totalstorage = $hosts->reduce(function ($carry, Host $item) {
                 return $carry + $item->totalstorage;
@@ -54,16 +54,16 @@ class Network extends Command
                 return $carry + (($item->storageprice/1e12*4320)*$item->totalstorage/1000/1000/1000);
             });
 
-            $prices_ =  [];
-            foreach ($hosts as $item) {
-                $prices_ = array_merge($prices_, array_fill(0, round($item->totalstorage/1000/1000/1000), $item->storageprice/1e12*4320));
-            }
-
-            $prices__ = collect($prices_);
+            // $prices_ =  [];
+            // foreach ($hosts as $item) {
+            //     $prices_ = array_merge($prices_, array_fill(0, round($item->totalstorage/1000/1000/1000), $item->storageprice/1e12*4320));
+            // }
+            //
+            // $prices__ = collect($prices_);
 
             echo "raw median: ".($hosts->median('storageprice')/1e12*4320).PHP_EOL;
             echo "raw avg: ".($hosts->avg('storageprice')/1e12*4320).PHP_EOL;
-            echo "gb weight median: ".$prices__->median().PHP_EOL;
+            // echo "gb weight median: ".$prices__->median().PHP_EOL;
             echo "gb weight avg: ".($price/($totalstorage/1000/1000/1000)).PHP_EOL;
             echo "storage gb: ".($totalstorage/1000/1000/1000).PHP_EOL;
             $avg_price = $hosts->median('storageprice')/1e12*4320;
