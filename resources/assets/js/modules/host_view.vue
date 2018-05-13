@@ -236,57 +236,90 @@ export default {
 
             this.error = false;
             this.loading = true;
-            axios.get('/api/host/'+this.$route.params.id)
-                .then((response) => {
-                    this.hostData = response.data;
+
+            let recommended = axios.get('/api/settings/recommended');
+
+            recommended.then((settingsResponse) => {
+                console.log('recommendedSettings', settingsResponse.data);
+                axios.get('/api/host/'+this.$route.params.id)
+                    .then((response) => {
+                        let recommendedSettings = settingsResponse.data;
+                        this.hostData = response.data;
+
+                        for(var i in this.hostData){
+                            if(i === "history") continue;
+
+                            var formatter = false;
+
+                            if(i === 'score') {
+                                formatter = function(str, entry){
+                                    var scores = JSON.parse(entry.score);
+                                    var resp = "";
+                                    for(var z in scores){
+                                        resp += "<p>"+z+": "+toFixed(scores[z])+"</p>"
+                                    }
+                                    return resp;
+                                };
+                            }
+
+                            if(i === 'contractprice' || i === 'maxcollateral') {
+                                formatter = function(str, entry, key){
+                                    let recommendation = '';
+                                    let recommended = recommendedSettings[key];
+                                    if(entry.rank > 50) {
+                                        recommendation = ' <sup>You can reach top 50 with '+(Math.round(parseInt(recommended.min)/1e24)) + ' SC</sup>';
+                                    }
+
+                                    return (Math.round(parseInt(str)/1e24)) + ' SC'+recommendation;
+                                };
+                            }
+
+                            if(i === 'maxdownloadbatchsize' || i === 'maxrevisebatchsize' || i === 'remainingstorage' || i === 'sectorsize' || i === 'totalstorage') {
+                                formatter = function(str, entry){
+                                    return humanFileSize(parseInt(str), true);
+                                };
+                            }
+
+                            if(i === 'storageprice' || i === 'collateral') {
+                                formatter = function(str, entry, key){
+                                    let recommendation = '';
+                                    let recommended = recommendedSettings[key];
+                                    if(entry.rank > 50 && recommended.median != str) {
+                                        recommendation = ' <sup>You can reach top 50 with '+(Math.round(parseInt(recommended.median)/1e12*4320)) + ' SC</sup>';
+                                    }
+
+                                    return (Math.round(parseInt(str)/1e12*4320)) + ' SC'+recommendation
+                                };
+                            }
+
+                            if(i === 'downloadbandwidthprice' || i === 'uploadbandwidthprice') {
+                                formatter = function(str, entry, key){
+                                    let recommendation = '';
+                                    let recommended = recommendedSettings[key];
+                                    if(entry.rank > 50 && recommended.median != str) {
+                                        recommendation = ' <sup>You can reach top 50 with '+(Math.round(parseInt(recommended.median)/1e12)) + ' SC</sup>';
+                                    }
+                                    return (Math.round(parseInt(str)/1e12)) + ' SC'+recommendation
+                                };
+                            }
+
+                            this.$set(this.allFields, i, {
+                                type: 'text',
+                                name: i,
+                                key: i,
+                                formatter: formatter
+                            });
+                        }
+
                     this.loading = false;
-
-                    for(var i in this.hostData){
-                        if(i === "history") continue;
-
-                        var formatter = false;
-
-                        if(i == 'score') {
-                            formatter = function(str, entry){
-                                var scores = JSON.parse(entry.score);
-                                var resp = "";
-                                for(var z in scores){
-                                    resp += "<p>"+z+": "+toFixed(scores[z])+"</p>"
-                                }
-                                return resp;
-                            };
-                        }
-
-                        if(i == 'contractprice' || i == 'maxcollateral') {
-                            formatter = function(str, entry){
-                                return (Math.round(parseInt(str)/1e24)) + ' SC';
-                            };
-                        }
-
-                        if(i == 'storageprice' || i == 'collateral') {
-                            formatter = function(str, entry){
-                                return (Math.round(parseInt(str)/1e12*4320)) + ' SC'
-                            };
-                        }
-
-                        if(i == 'downloadbandwidthprice' || i == 'uploadbandwidthprice') {
-                            formatter = function(str, entry){
-                                return (Math.round(parseInt(str)/1e12)) + ' SC'
-                            };
-                        }
-
-                        this.$set(this.allFields, i, {
-                            type: 'text',
-                            name: i,
-                            key: i,
-                            formatter: formatter
-                        });
-                    }
                 })
                 .catch((error) => {
                     this.error = error.response.data;
                     this.loading = false;
                 });
+            });
+
+
 
             axios.get('/api/sia/release').then((response) => {
                 this.releaseData = response.data;

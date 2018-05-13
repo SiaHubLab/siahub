@@ -51,3 +51,5 @@ Route::get('/sia/release', function () {
 
     return Cache::get('siarelease');
 });
+
+Route::get('/settings/recommended', "HostsController@recommendedSettings");

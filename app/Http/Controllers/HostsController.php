@@ -41,13 +41,16 @@ class HostsController extends Controller
         if (!Cache::has($cache_key)) {
             if (is_numeric($id)) {
                 $host = Host::with(['history' => function ($query) use ($request) {
+//                    $query->take(1000);
                     // if (!empty($request->input('xmin')) && !empty($request->input('xmax'))) {
                     //     return $query->whereBetween('created_at', [\Carbon\Carbon::createFromTimestamp($request->input('xmin')), new \Carbon\Carbon::createFromTimestamp($request->input('xmax'))]);
                     // }
                     return $query;
                 }])->find($id);
             } else {
-                $host = Host::with('history')->where('key', $id)->first();
+                $host = Host::with('history', function($q){
+                    //$q->take(1000);
+                })->where('key', $id)->first();
             }
 
             Cache::put($cache_key, json_encode($host), 10);
@@ -149,6 +152,59 @@ class HostsController extends Controller
             $hosts = NetworkHistory::orderBy('created_at', 'asc')->get();
             Cache::put($cache_key, json_encode($hosts), 5);
         }
+
+        return Cache::get($cache_key);
+    }
+
+    public function recommendedSettings()
+    {
+        $cache_key = "recommendedSettings";
+
+//        if (!Cache::has($cache_key)) {
+            $hosts = Host::where('active', 1)
+                         ->orderBy('rank', 'asc')
+                         ->take(50)
+                         ->get();
+
+
+            //maxduration:          25 Weeks
+            //	maxdownloadbatchsize: 17.83 MB
+            //	maxrevisebatchsize:   17.83 MB
+            //	netaddress:           sanasol.sknt.ru:9982 (manually specified)
+            //	windowsize:           24 Hours
+            //
+            //	collateral:       200 SC / TB / Month
+            //	collateralbudget: 1 MS
+            //	maxcollateral:    5 KS Per Contract
+            //
+            //	mincontractprice:          1 mS
+            //	mindownloadbandwidthprice: 1 SC / TB
+            //	minstorageprice:           40 SC / TB / Month
+            //	minuploadbandwidthprice:   1 MS / TB
+
+            function minmaxavg($hosts, $field){
+                return [
+                    'min' => $hosts->min($field),
+                    'avg' => $hosts->avg($field),
+                    'max' => $hosts->max($field),
+                    'median' => $hosts->median($field),
+                ];
+            }
+
+            $settings = [];
+            $settings['maxduration'] = minmaxavg($hosts, 'maxduration');
+            $settings['maxdownloadbatchsize'] = minmaxavg($hosts,'maxdownloadbatchsize');
+            $settings['windowsize'] = minmaxavg($hosts,'windowsize');
+            $settings['collateral'] = minmaxavg($hosts,'collateral');
+            $settings['collateralbudget'] = minmaxavg($hosts,'collateralbudget');
+            $settings['maxcollateral'] = minmaxavg($hosts,'maxcollateral');
+            $settings['contractprice'] = minmaxavg($hosts,'contractprice');
+            $settings['downloadbandwidthprice'] = minmaxavg($hosts,'downloadbandwidthprice');
+            $settings['storageprice'] = minmaxavg($hosts,'storageprice');
+            $settings['uploadbandwidthprice'] = minmaxavg($hosts,'uploadbandwidthprice');
+
+            Cache::put($cache_key, json_encode($settings), 5);
+//        }
 
         return Cache::get($cache_key);
     }

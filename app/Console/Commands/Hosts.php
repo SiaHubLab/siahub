@@ -79,16 +79,22 @@ class Hosts extends Command
                     $db_host->fill($host);
                     $db_host->algorithm = $host['publickey']['algorithm'];
                     $db_host->key = $host['publickey']['key'];
-                    $score = 1;
-                    foreach ($host['scorebreakdown'] as $key => $val) {
-                        if ($key == "score" || $key == "conversionrate") {
-                            continue;
-                        }
 
-                        $score = $score*$val;
+                    if(!empty($host['scorebreakdown'])) {
+                        $score = 1;
+                        foreach ($host['scorebreakdown'] as $key => $val) {
+                            if ($key == "score" || $key == "conversionrate") {
+                                continue;
+                            }
+
+                            $score = $score*$val;
+                        }
+                        $host['scorebreakdown']['score'] = sprintf('%.30f', $score);
+                        $db_host->score = json_encode($host['scorebreakdown']);
+                    } else {
+                        $db_host->score = json_encode([]);
                     }
-                    $host['scorebreakdown']['score'] = sprintf('%.30f', $score);
-                    $db_host->score = json_encode($host['scorebreakdown']);
+
 
                     $last_scan = end($host['scanhistory']);
 
@@ -101,7 +107,7 @@ class Hosts extends Command
                         $tz = substr($last_scan['timestamp'], -6);
                         $db_host->last_seen = strtotime(explode('.', $last_scan['timestamp'])[0].$tz);
 
-//                        dump($tz, $last_scan['timestamp']);
+                        //dump($tz, $last_scan['timestamp']);
                     }
                     $db_host->active = $last_scan['success'];
 
