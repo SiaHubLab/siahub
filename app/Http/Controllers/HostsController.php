@@ -160,14 +160,14 @@ class HostsController extends Controller
     {
         $cache_key = "recommendedSettings";
 
-//        if (!Cache::has($cache_key)) {
+        if (!Cache::has($cache_key)) {
             $hosts = Host::where('active', 1)
                          ->orderBy('rank', 'asc')
                          ->take(50)
                          ->get();
 
 
-            //maxduration:          25 Weeks
+            //  maxduration:          25 Weeks
             //	maxdownloadbatchsize: 17.83 MB
             //	maxrevisebatchsize:   17.83 MB
             //	netaddress:           sanasol.sknt.ru:9982 (manually specified)
@@ -204,7 +204,7 @@ class HostsController extends Controller
             $settings['uploadbandwidthprice'] = minmaxavg($hosts,'uploadbandwidthprice');
 
             Cache::put($cache_key, json_encode($settings), 5);
-//        }
+        }
 
         return Cache::get($cache_key);
     }
