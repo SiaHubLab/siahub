@@ -101,7 +101,7 @@ class Hosts extends Command
                         $tz = substr($last_scan['timestamp'], -6);
                         $db_host->last_seen = strtotime(explode('.', $last_scan['timestamp'])[0].$tz);
 
-                        dump($tz, $last_scan['timestamp']);
+//                        dump($tz, $last_scan['timestamp']);
                     }
                     $db_host->active = $last_scan['success'];
 
