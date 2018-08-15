@@ -144,7 +144,7 @@ export default {
                     min: 0
                 }, {
                     title: {text: 'Earnings'},
-                    labels: { format: '{value:.0f} SC/day' },
+                    labels: { format: '{value:.0f} SPACE/day' },
                     min: 0,
                     opposite: false
                 }, {
@@ -203,11 +203,11 @@ export default {
                             y: ((entry.storageprice/1e12*4320)*((entry.totalstorage-entry.remainingstorage)/1000/1000/1000/1000))/30
                         };
                     }),
-                    tooltip: { valueSuffix: ' SC/day' },
+                    tooltip: { valueSuffix: ' SPACE/day' },
                     yAxis: 1,
                     color: '#00ff00',
                     fillColor: 'transparent',
-                    tooltip: { pointFormat: '<span style="color:green">{series.name}: <b>{point.y:.2f} SC/day</b></span><br/>' },
+                    tooltip: { pointFormat: '<span style="color:green">{series.name}: <b>{point.y:.2f} SPACE/day</b></span><br/>' },
                 }]
             };
             console.log(Highcharts.getOptions().colors, options);
@@ -267,10 +267,10 @@ export default {
                                     let recommendation = '';
                                     let recommended = recommendedSettings[key];
                                     if(entry.rank > 50) {
-                                        recommendation = ' <sup>You can reach top 50 with '+(Math.round(parseInt(recommended.min)/1e24)) + ' SC</sup>';
+                                        recommendation = ' <sup>You can reach top 50 with '+(Math.round(parseInt(recommended.min)/1e24)) + ' SPACE</sup>';
                                     }
 
-                                    return (Math.round(parseInt(str)/1e24)) + ' SC'+recommendation;
+                                    return (Math.round(parseInt(str)/1e24)) + ' SPACE'+recommendation;
                                 };
                             }
 
@@ -285,10 +285,10 @@ export default {
                                     let recommendation = '';
                                     let recommended = recommendedSettings[key];
                                     if(entry.rank > 50 && recommended.median != str) {
-                                        recommendation = ' <sup>You can reach top 50 with '+(Math.round(parseInt(recommended.median)/1e12*4320)) + ' SC</sup>';
+                                        recommendation = ' <sup>You can reach top 50 with '+(Math.round(parseInt(recommended.median)/1e12*4320)) + ' SPACE</sup>';
                                     }
 
-                                    return (Math.round(parseInt(str)/1e12*4320)) + ' SC'+recommendation
+                                    return (Math.round(parseInt(str)/1e12*4320)) + ' SPACE'+recommendation
                                 };
                             }
 
@@ -297,9 +297,9 @@ export default {
                                     let recommendation = '';
                                     let recommended = recommendedSettings[key];
                                     if(entry.rank > 50 && recommended.median != str) {
-                                        recommendation = ' <sup>You can reach top 50 with '+(Math.round(parseInt(recommended.median)/1e12)) + ' SC</sup>';
+                                        recommendation = ' <sup>You can reach top 50 with '+(Math.round(parseInt(recommended.median)/1e12)) + ' SPACE</sup>';
                                     }
-                                    return (Math.round(parseInt(str)/1e12)) + ' SC'+recommendation
+                                    return (Math.round(parseInt(str)/1e12)) + ' SPACE'+recommendation
                                 };
                             }
 
@@ -332,7 +332,7 @@ export default {
         price: function(){
             if(!this.hostData) return 'loading';
 
-            return Math.round(this.hostData.storageprice/1e12*4320)+" SC";
+            return Math.round(this.hostData.storageprice/1e12*4320)+" SPACE";
         },
         totalstorage: function(){
             if(!this.hostData) return 'loading';

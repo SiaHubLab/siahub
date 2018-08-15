@@ -42,7 +42,7 @@ Route::get('/sia/release', function () {
     if (!Cache::has('siarelease')) {
         try {
             $client = new \GuzzleHttp\Client();
-            $res = $client->request('GET', 'https://api.github.com/repos/NebulousLabs/Sia/releases/latest');
+            $res = $client->request('GET', 'https://api.github.com/repos/HyperspaceApp/Hyperspace/releases/latest');
             $response = json_decode($res->getBody(), true);
             Cache::put('siarelease', $response, 24*60);
         } catch(Exception $e) {

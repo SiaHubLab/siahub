@@ -137,7 +137,7 @@ export default {
             mode: 'active',
             sortKey: 'used',
             gridColumns: ['score', 'host', 'totalstorage', 'used', 'used_percent', 'price', 'actions'],
-            columnsTitles: {'totalstorage': 'Total storage', 'used': 'Used storage', 'used_percent': 'Used (%)', 'price': 'Price (SC/TB/month)'},
+            columnsTitles: {'totalstorage': 'Total storage', 'used': 'Used storage', 'used_percent': 'Used (%)', 'price': 'Price (SPACE/TB/month)'},
             formatters: {
                 actions: function(str, entry){
                     return {
@@ -164,7 +164,7 @@ export default {
                 price: function(str, entry, raw){
                     if(raw) return Math.round(entry.storageprice/1e12*4320);
 
-                    return Math.round(entry.storageprice/1e12*4320)+" SC";
+                    return Math.round(entry.storageprice/1e12*4320)+" SPACE";
                 },
                 totalstorage: function(str, entry, raw){
                     if(raw) return parseInt(entry.totalstorage);

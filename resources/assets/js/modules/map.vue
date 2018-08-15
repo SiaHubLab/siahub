@@ -54,7 +54,7 @@ export default {
             var points = this.getPoints();
 
             var image = {
-                url: 'img/marker.png',
+                url: 'img/marker.png?2',
                 size: new google.maps.Size(30, 30),
                 origin: new google.maps.Point(0, 0),
                 anchor: new google.maps.Point(30, 30)
@@ -73,7 +73,7 @@ export default {
                 this.markers.push(marker);
 
                 var contentString = '<h4>'+point.host.host+'</h4>\
-                <p>Price: '+Math.round(point.host.storageprice/1e12*4320)+' SC </p>\
+                <p>Price: '+Math.round(point.host.storageprice/1e12*4320)+' SPACE </p>\
                 <p>Storage: '+humanFileSize(point.host.totalstorage, true)+'</p>\
                 <p>Used: '+humanFileSize(point.host.totalstorage-point.host.remainingstorage, true)+'</p>\
                 <p>Announced addr: '+point.host.netaddress+'</p>\

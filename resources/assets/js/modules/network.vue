@@ -44,9 +44,9 @@
                                 </tr>
                                 <tr>
                                     <td>Avg storage price</td>
-                                    <td><numberChangeSnippet :value="priceChange24hr" suffix="SC"></numberChangeSnippet></td>
-                                    <td><numberChangeSnippet :value="priceChange7d" suffix="SC"></numberChangeSnippet></td>
-                                    <td><numberChangeSnippet :value="priceChange30d" suffix="SC"></numberChangeSnippet></td>
+                                    <td><numberChangeSnippet :value="priceChange24hr" suffix="SPACE"></numberChangeSnippet></td>
+                                    <td><numberChangeSnippet :value="priceChange7d" suffix="SPACE"></numberChangeSnippet></td>
+                                    <td><numberChangeSnippet :value="priceChange30d" suffix="SPACE"></numberChangeSnippet></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -208,7 +208,7 @@ export default {
             options.plotOptions.pie.borderColor = (this.appMode !== "night-mode") ? "#fff" : "#252525";
             options.plotOptions.pie.colors = (this.appMode !== "night-mode") ? this.pieConfig.plotOptions.pie.colors : this.pieConfig.plotOptions.pie.nightColors;
 
-            options.title.text = 'Sia version';
+            options.title.text = 'Hyperspace version';
             options.title.style.color = (this.appMode !== "night-mode") ? "#000" : "#fff";
             options.legend.itemStyle.color = (this.appMode !== "night-mode") ? "#000" : "#fff";
             options.legend.itemHoverStyle.color = (this.appMode !== "night-mode") ? "#828282" : "#252525";
@@ -643,7 +643,7 @@ export default {
                     ]
                 },
                 tooltip: {
-                    pointFormat: '<span style="color:#00cba0">{series.name}: <b>{point.y:.2f} SC/TB/Mo</b></span><br/>'
+                    pointFormat: '<span style="color:#00cba0">{series.name}: <b>{point.y:.2f} SPACE/TB/Mo</b></span><br/>'
                 },
             }];
 

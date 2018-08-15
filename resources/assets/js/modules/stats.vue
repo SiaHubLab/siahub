@@ -1,8 +1,8 @@
 <template>
 <ul class="nav navbar-nav navbar-right">
     <li><router-link to="/network" v-tooltip:bottom="'Storage Utilization'"><span v-html="utilization()"></span></router-link></li>
-    <li><router-link to="/network" v-tooltip:bottom="'$/TB/month median price'">Avg Price: ${{averagePrice()}}/{{scPrice()}} SC</router-link></li>
-    <li><router-link to="/network" v-tooltip:bottom="'CoinMarketCap Price'">{{ticker.price_btc}} BTC / {{parseFloat(ticker.price_usd).toFixed(4)}}$</router-link></li>
+    <li><router-link to="/network" v-tooltip:bottom="'$/TB/month median price'">Avg Price: {{scPrice()}} SPACE</router-link></li>
+    <!--<li><router-link to="/network" v-tooltip:bottom="'CoinMarketCap Price'">{{ticker.price_btc}} BTC / {{parseFloat(ticker.price_usd).toFixed(4)}}$</router-link></li>-->
 </ul>
 </template>
 
@@ -13,17 +13,17 @@ import _ from 'lodash'
 
 export default {
     mounted() {
-        this.refresh();
+        // this.refresh();
 
-        setInterval(this.refresh, 60000);
+        // setInterval(this.refresh, 60000);
     },
     computed: mapGetters(['hosts']),
     watch: {
         ticker(){
-            this.updateTitle();
+            // this.updateTitle();
         },
         hosts(){
-            this.updateTitle();
+            // this.updateTitle();
         }
     },
     methods: {

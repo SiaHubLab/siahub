@@ -70,7 +70,7 @@ export default {
                 this.markers.push(marker);
 
                 var contentString = '<h4>'+point.host.host+'</h4>\
-                <p>Price: '+Math.round(point.host.storageprice/1e12*4320)+' SC </p>\
+                <p>Price: '+Math.round(point.host.storageprice/1e12*4320)+' SPACE </p>\
                 <p>Storage: '+humanFileSize(point.host.totalstorage, true)+'</p>\
                 <p>Used: '+humanFileSize(point.host.totalstorage-point.host.remainingstorage, true)+'</p>\
                 <p>Announced addr: '+point.host.netaddress+'</p>\

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="/img/favicon.png" />
+    <link rel="icon" type="image/png" href="/img/favicon.png?1" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -33,7 +33,7 @@
 
                     <!-- Branding Image -->
                     <router-link class="navbar-brand" to="/">
-                        <img src="/img/logo.png" alt="{{ config('app.name', 'Laravel') }}">
+                        <img src="/img/logo.png?4" alt="{{ config('app.name', 'Laravel') }}">
                     </router-link>
                 </div>
 
@@ -47,6 +47,7 @@
                         <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Related links <span class="caret"></span></a>
                           <ul class="dropdown-menu">
+                              <li><a target="_blank" href="https://siahub.info/">Siacoin Hosts Explorer</a></li>
                               <li><a target="_blank" href="https://explorer.siahub.info/">Siacoin Explorer</a></li>
                               <li><a target="_blank" href="https://consensus.siahub.info/">Blockchain download</a></li>
                           </ul>
