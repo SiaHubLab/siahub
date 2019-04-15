@@ -68,6 +68,11 @@ class Hosts extends Command
             $res = $client->request('GET', env('SIA_ADDRESS').'/hostdb/all');
             $response = json_decode($res->getBody(), true);
             foreach ($response['hosts'] as $host) {
+                if (version_compare($host['version'], '1.3.7', '<')) {
+                    echo "Skip {$host['version']}".PHP_EOL;
+                    continue;
+                }
+
                 try {
                     $db_host = Host::firstOrNew(['key' => $host['publickey']['key']]);
 
