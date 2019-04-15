@@ -12,7 +12,7 @@
                             <p>Provides {{storageOfNetwork}}% of total network storage</p>
                             <p>Holds {{utilizationOfNetwork}}% of data stored on network</p>
                             <p>Wallet Version: {{hostData.version}}</p>
-                            <p v-if="walletOutdated()" class="alert alert-danger">Wallet is outdated, don't forget to <a target="_blank" :href="this.releaseData['html_url']">upgrade your wallet to {{this.releaseData['tag_name']}}</a></p>
+                            <p v-if="walletOutdated()" class="alert alert-danger">Wallet is outdated, don't forget to <a target="_blank" href="https://gitlab.com/NebulousLabs/Sia/releases">upgrade your wallet to {{this.releaseData['tag_name']}}</a></p>
                             <p>Price: {{price()}}</p>
                             <p><span class="label label-info" style="font-size: 100%;">Last success check: {{moment.utc(hostData.last_seen*1000).format('DD/MM/YY HH:mm z')}}</span></p>
                         </div>
@@ -318,7 +318,7 @@ export default {
                     this.loading = false;
                 });
             });
-            
+
             axios.get('/api/sia/release').then((response) => {
                 this.releaseData = response.data;
              });

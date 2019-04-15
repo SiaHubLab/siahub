@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\VersionScope;
 use Illuminate\Database\Eloquent\Model;
 
 class Host extends Model
@@ -39,6 +40,19 @@ class Host extends Model
         'historicdowntime',
         'historicuptime',
     ];
+
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new VersionScope);
+    }
 
     public function history()
     {
